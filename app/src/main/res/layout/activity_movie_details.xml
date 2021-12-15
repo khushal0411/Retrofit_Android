@@ -9,47 +9,49 @@
     <ImageView
         android:id="@+id/img_backgroungimage"
         android:layout_width="wrap_content"
-        android:layout_marginLeft="0dp"
+        android:layout_marginStart="0dp"
         android:layout_marginTop="30dp"
         android:layout_height="200dp"
-        android:paddingLeft="12dp"
-        android:paddingRight="15dp"
-        app:srcCompat="@drawable/c" />
+        android:paddingStart="12dp"
+        android:paddingEnd="15dp"
+        app:srcCompat="@drawable/c"
+        tools:ignore="ContentDescription" />
     <ImageView
         android:id="@+id/img_movieposter"
         android:layout_width="100dp"
         android:layout_height="140dp"
         android:layout_marginTop="190dp"
-        android:layout_marginLeft="30dp"
-        app:srcCompat="@drawable/a">
+        android:layout_marginStart="30dp"
+        app:srcCompat="@drawable/a"
+        tools:ignore="ContentDescription" />
 
-    </ImageView>
+
 
     <TextView
         android:id="@+id/tv_movienamepage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="160dp"
+        android:layout_marginStart="160dp"
         android:layout_marginTop="260dp"
         android:text="movie"
         android:textColor="#3B6E75"
         android:textSize="22sp"
-        android:textStyle="bold"></TextView>
+        android:textStyle="bold"/>
 
     <TextView
         android:id="@+id/tv_language"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
+        android:layout_marginStart="30dp"
         android:layout_marginTop="360dp"
         android:text="language"
-        android:textColor="#396308"></TextView>
+        android:textColor="#396308"/>
 
     <TextView
         android:id="@+id/tv_ratings"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
+        android:layout_marginStart="30dp"
         android:layout_marginTop="400dp"
         android:text="ratings"
         android:textColor="#ED1111">
@@ -60,24 +62,25 @@
         android:layout_height="10dp"
         app:srcCompat="@android:drawable/btn_star_big_on"
         android:layout_marginTop="405dp"
-        android:layout_marginLeft="110dp"/>
+        android:layout_marginStart="110dp"
+        tools:ignore="ContentDescription" />
     <ImageView
         android:layout_width="10dp"
         android:layout_height="10dp"
         app:srcCompat="@android:drawable/btn_star_big_on"
         android:layout_marginTop="405dp"
-        android:layout_marginLeft="120dp"/>
+        android:layout_marginStart="120dp"/>
     <ImageView
         android:layout_width="10dp"
         android:layout_height="10dp"
         app:srcCompat="@android:drawable/btn_star_big_on"
         android:layout_marginTop="405dp"
-        android:layout_marginLeft="130dp"/>
+        android:layout_marginStart="130dp"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="440dp"
-        android:layout_marginLeft="30dp"
+        android:layout_marginStart="30dp"
         android:textSize="20sp"
         android:text="Overview:"
         android:textStyle="bold">
@@ -88,11 +91,11 @@
         android:id="@+id/tv_movieoverview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
+        android:layout_marginStart="30dp"
         android:layout_marginTop="474dp"
         android:fontFamily="sans-serif-condensed"
-        android:text="18sp"
-        android:textSize="16dp"
-        android:textColor="#3B6E75"></TextView>
+        android:text="Overview"
+        android:textSize="16sp"
+        android:textColor="#3B6E75"/>
 
 </RelativeLayout>

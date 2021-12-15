@@ -6,21 +6,27 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".MainActivity">
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/custom_toolbar"/>
+
 <ScrollView
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:ignore="UselessParent">
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
     
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
                 android:layout_marginTop="40dp"
-                android:layout_marginLeft="80dp"
+                android:layout_marginStart="80dp"
                 android:textSize="20sp"
-                android:text="Movie Recomendation App">
+                android:text="@string/movie_recomendation_app">
 
             </TextView>
     <LinearLayout
@@ -30,36 +36,41 @@
         android:orientation="vertical">
         <HorizontalScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            tools:ignore="UselessParent">
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
             <ImageView
-                android:layout_marginLeft="1dp"
+                android:layout_marginStart="2dp"
                 android:layout_marginTop="50dp"
-                android:layout_width="410dp"
+                android:layout_width="380dp"
                 android:layout_height="170dp"
-                app:srcCompat="@drawable/aa"/>
+                app:srcCompat="@drawable/aa"
+                tools:ignore="ContentDescription" />
                 <ImageView
                     android:layout_marginTop="50dp"
-                    android:layout_marginLeft="8dp"
-                    android:layout_width="410dp"
+                    android:layout_marginStart="2dp"
+                    android:layout_width="380dp"
                     android:layout_height="170dp"
-                    app:srcCompat="@drawable/bb"/>
+                    app:srcCompat="@drawable/bb"
+                    tools:ignore="ContentDescription" />
                 <ImageView
                     android:layout_marginTop="50dp"
-                    android:layout_marginLeft="8dp"
-                    android:layout_width="410dp"
+                    android:layout_marginStart="2dp"
+                    android:layout_width="380dp"
                     android:layout_height="170dp"
-                    app:srcCompat="@drawable/cc"/>
+                    app:srcCompat="@drawable/cc"
+                    tools:ignore="ContentDescription" />
                 <ImageView
                     android:layout_marginTop="50dp"
-                    android:layout_marginLeft="8dp"
-                    android:layout_width="410dp"
+                    android:layout_marginStart="2dp"
+                    android:layout_width="380dp"
                     android:layout_height="170dp"
-                    app:srcCompat="@drawable/dd"/>
+                    app:srcCompat="@drawable/dd"
+                    tools:ignore="ContentDescription" />
             </LinearLayout>
 
 
@@ -69,8 +80,8 @@
 <TextView
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:text="Popular Movies"
-    android:layout_marginLeft="10dp"
+    android:text="@string/popular_movies"
+    android:layout_marginStart="10dp"
     android:layout_marginTop="320dp"
     android:textSize="20sp"
     android:textStyle="bold"
@@ -81,341 +92,32 @@
         android:layout_height="wrap_content"
         android:id="@+id/tv_seemore"
         android:layout_marginTop="320dp"
-        android:layout_marginLeft="310dp"
-        android:text="See more"
-        android:textStyle="bold">
+        android:layout_marginStart="310dp"
+        android:text="@string/see_more"
+        android:textStyle="bold"/>
 
-    </TextView>
+
     <LinearLayout
         android:layout_marginTop="350dp"
         android:layout_width="match_parent"
         android:layout_height="220dp"
         android:orientation="vertical">
-        <HorizontalScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/card_1"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_width="130dp"
-                    android:layout_height="194dp">
-                    <ImageView
-                        android:id="@+id/img_1"
-                        android:layout_marginTop="12dp"
-                        android:layout_marginLeft="15dp"
-                        android:layout_width="100dp"
-                        android:layout_height="140dp"
-                        android:src="@drawable/ccccc">
-                    </ImageView>
 
-                    <ImageView
-                        android:layout_width="10dp"
-                        android:layout_height="10dp"
-                        app:srcCompat="@android:drawable/btn_star_big_on"
-                        android:layout_marginTop="164dp"
-                        android:layout_marginLeft="60dp"/>
-                    <ImageView
-                        android:layout_width="10dp"
-                        android:layout_height="10dp"
-                        app:srcCompat="@android:drawable/btn_star_big_on"
-                        android:layout_marginTop="164dp"
-                        android:layout_marginLeft="70dp"/>
-                    <ImageView
-                        android:layout_width="10dp"
-                        android:layout_height="10dp"
-                        app:srcCompat="@android:drawable/btn_star_big_on"
-                        android:layout_marginTop="164dp"
-                        android:layout_marginLeft="80dp"/>
-                    <ImageView
-                        android:layout_width="10dp"
-                        android:layout_height="10dp"
-                        app:srcCompat="@android:drawable/btn_star_big_on"
-                        android:layout_marginTop="164dp"
-                        android:layout_marginLeft="90dp">
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/rec_popularmovies">
 
-                    </ImageView>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="13sp"
-                        android:id="@+id/tv_movie_rating"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginTop="160dp"
-                        android:text="Name">
+        </androidx.recyclerview.widget.RecyclerView>
 
-                    </TextView>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="13sp"
-                        android:id="@+id/tv_movie_name"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginTop="175dp"
-                        android:text="Name">
-
-                    </TextView>
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/card_2"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_width="130dp"
-                    android:layout_height="194dp">
-                    <ImageView
-                        android:id="@+id/img_2"
-                        android:layout_marginTop="12dp"
-                        android:layout_marginLeft="15dp"
-                        android:layout_width="100dp"
-                        android:layout_height="140dp"
-                        android:src="@drawable/ccccc">
-                    </ImageView>
-                    <ImageView
-                        android:layout_width="10dp"
-                        android:layout_height="10dp"
-                        app:srcCompat="@android:drawable/btn_star_big_on"
-                        android:layout_marginTop="164dp"
-                        android:layout_marginLeft="60dp"/>
-                    <ImageView
-                        android:layout_width="10dp"
-                        android:layout_height="10dp"
-                        app:srcCompat="@android:drawable/btn_star_big_on"
-                        android:layout_marginTop="164dp"
-                        android:layout_marginLeft="70dp"/>
-                    <ImageView
-                        android:layout_width="10dp"
-                        android:layout_height="10dp"
-                        app:srcCompat="@android:drawable/btn_star_big_on"
-                        android:layout_marginTop="164dp"
-                        android:layout_marginLeft="80dp"/>
-                    <ImageView
-                        android:layout_width="10dp"
-                        android:layout_height="10dp"
-                        app:srcCompat="@android:drawable/btn_star_big_on"
-                        android:layout_marginTop="164dp"
-                        android:layout_marginLeft="90dp">
-
-                    </ImageView>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="13sp"
-                        android:id="@+id/tv_movie_rating2"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginTop="160dp"
-                        android:text="Name">
-
-                    </TextView>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="13sp"
-                        android:id="@+id/tv_movie_name2"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginTop="175dp"
-                        android:text="Name">
-
-                    </TextView>
-                </androidx.cardview.widget.CardView>
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/card_3"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_width="130dp"
-                    android:layout_height="194dp">
-                    <ImageView
-                        android:id="@+id/img_3"
-                        android:layout_marginTop="12dp"
-                        android:layout_marginLeft="15dp"
-                        android:layout_width="100dp"
-                        android:layout_height="140dp"
-                        android:src="@drawable/ccccc">
-                    </ImageView>
-                    <ImageView
-                        android:layout_width="10dp"
-                        android:layout_height="10dp"
-                        app:srcCompat="@android:drawable/btn_star_big_on"
-                        android:layout_marginTop="164dp"
-                        android:layout_marginLeft="60dp"/>
-                    <ImageView
-                        android:layout_width="10dp"
-                        android:layout_height="10dp"
-                        app:srcCompat="@android:drawable/btn_star_big_on"
-                        android:layout_marginTop="164dp"
-                        android:layout_marginLeft="70dp"/>
-                    <ImageView
-                        android:layout_width="10dp"
-                        android:layout_height="10dp"
-                        app:srcCompat="@android:drawable/btn_star_big_on"
-                        android:layout_marginTop="164dp"
-                        android:layout_marginLeft="80dp"/>
-                    <ImageView
-                        android:layout_width="10dp"
-                        android:layout_height="10dp"
-                        app:srcCompat="@android:drawable/btn_star_big_on"
-                        android:layout_marginTop="164dp"
-                        android:layout_marginLeft="90dp">
-
-                    </ImageView>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="13sp"
-                        android:id="@+id/tv_movie_rating3"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginTop="160dp"
-                        android:text="Name">
-
-                    </TextView>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="13sp"
-                        android:id="@+id/tv_movie_name3"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginTop="175dp"
-                        android:text="Name">
-
-                    </TextView>
-                </androidx.cardview.widget.CardView>
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/card_4"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_width="130dp"
-                    android:layout_height="194dp">
-                    <ImageView
-                        android:id="@+id/img_4"
-                        android:layout_marginTop="12dp"
-                        android:layout_marginLeft="15dp"
-                        android:layout_width="100dp"
-                        android:layout_height="140dp"
-                        android:src="@drawable/ccccc">
-                    </ImageView>
-                    <ImageView
-                        android:layout_width="10dp"
-                        android:layout_height="10dp"
-                        app:srcCompat="@android:drawable/btn_star_big_on"
-                        android:layout_marginTop="164dp"
-                        android:layout_marginLeft="60dp"/>
-                    <ImageView
-                        android:layout_width="10dp"
-                        android:layout_height="10dp"
-                        app:srcCompat="@android:drawable/btn_star_big_on"
-                        android:layout_marginTop="164dp"
-                        android:layout_marginLeft="70dp"/>
-                    <ImageView
-                        android:layout_width="10dp"
-                        android:layout_height="10dp"
-                        app:srcCompat="@android:drawable/btn_star_big_on"
-                        android:layout_marginTop="164dp"
-                        android:layout_marginLeft="80dp"/>
-                    <ImageView
-                        android:layout_width="10dp"
-                        android:layout_height="10dp"
-                        app:srcCompat="@android:drawable/btn_star_big_on"
-                        android:layout_marginTop="164dp"
-                        android:layout_marginLeft="90dp">
-
-                    </ImageView>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="13sp"
-                        android:id="@+id/tv_movie_rating4"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginTop="160dp"
-                        android:text="Name">
-
-                    </TextView>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="13sp"
-                        android:id="@+id/tv_movie_name4"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginTop="175dp"
-                        android:text="Name">
-
-                    </TextView>
-                </androidx.cardview.widget.CardView>
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/card_5"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_width="130dp"
-                    android:layout_height="194dp">
-                    <ImageView
-                        android:id="@+id/img_5"
-                        android:layout_marginTop="12dp"
-                        android:layout_marginLeft="15dp"
-                        android:layout_width="100dp"
-                        android:layout_height="140dp"
-                        android:src="@drawable/ccccc">
-                    </ImageView>
-                    <ImageView
-                        android:layout_width="10dp"
-                        android:layout_height="10dp"
-                        app:srcCompat="@android:drawable/btn_star_big_on"
-                        android:layout_marginTop="164dp"
-                        android:layout_marginLeft="60dp"/>
-                    <ImageView
-                        android:layout_width="10dp"
-                        android:layout_height="10dp"
-                        app:srcCompat="@android:drawable/btn_star_big_on"
-                        android:layout_marginTop="164dp"
-                        android:layout_marginLeft="70dp"/>
-                    <ImageView
-                        android:layout_width="10dp"
-                        android:layout_height="10dp"
-                        app:srcCompat="@android:drawable/btn_star_big_on"
-                        android:layout_marginTop="164dp"
-                        android:layout_marginLeft="80dp"/>
-                    <ImageView
-                        android:layout_width="10dp"
-                        android:layout_height="10dp"
-                        app:srcCompat="@android:drawable/btn_star_big_on"
-                        android:layout_marginTop="164dp"
-                        android:layout_marginLeft="90dp">
-
-                    </ImageView>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="13sp"
-                        android:id="@+id/tv_movie_rating5"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginTop="160dp"
-                        android:text="Name">
-
-                    </TextView>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="13sp"
-                        android:id="@+id/tv_movie_name5"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginTop="175dp"
-                        android:text="Name">
-
-                    </TextView>
-                </androidx.cardview.widget.CardView>
-
-            </LinearLayout>
-
-        </HorizontalScrollView>
 
     </LinearLayout>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Top Rated Movies"
-            android:layout_marginLeft="10dp"
+            android:text="@string/top_rated_movies"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="620dp"
             android:textSize="20sp"
             android:textStyle="bold"
@@ -426,281 +128,25 @@
             android:layout_height="wrap_content"
             android:id="@+id/tv_seemore2"
             android:layout_marginTop="620dp"
-            android:layout_marginLeft="310dp"
-            android:text="See more"
-            android:textStyle="bold">
+            android:layout_marginStart="310dp"
+            android:text="@string/see_more"
+            android:textStyle="bold"/>
 
-        </TextView>
+
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="650dp"
     android:orientation="vertical">
-    <HorizontalScrollView
+    <androidx.recyclerview.widget.RecyclerView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="220dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/rec_toprated">
 
-            android:orientation="horizontal">
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/t1"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_width="130dp"
-                android:layout_height="194dp">
-                <ImageView
-                    android:id="@+id/img_tr1"
-                    android:layout_marginTop="12dp"
-                    android:layout_marginLeft="15dp"
-                    android:layout_width="100dp"
-                    android:layout_height="140dp"
-                    android:src="@drawable/ccccc">
-                </ImageView>
-
-                <ImageView
-                    android:layout_width="10dp"
-                    android:layout_height="10dp"
-                    app:srcCompat="@android:drawable/btn_star_big_on"
-                    android:layout_marginTop="164dp"
-                    android:layout_marginLeft="60dp"/>
-                <ImageView
-                    android:layout_width="10dp"
-                    android:layout_height="10dp"
-                    app:srcCompat="@android:drawable/btn_star_big_on"
-                    android:layout_marginTop="164dp"
-                    android:layout_marginLeft="70dp"/>
-                <ImageView
-                    android:layout_width="10dp"
-                    android:layout_height="10dp"
-                    app:srcCompat="@android:drawable/btn_star_big_on"
-                    android:layout_marginTop="164dp"
-                    android:layout_marginLeft="80dp"/>
-                <ImageView
-                    android:layout_width="10dp"
-                    android:layout_height="10dp"
-                    app:srcCompat="@android:drawable/btn_star_big_on"
-                    android:layout_marginTop="164dp"
-                    android:layout_marginLeft="90dp">
-
-                </ImageView>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="13sp"
-                    android:id="@+id/tv_movie_ratingtr1"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="160dp"
-                    android:text="Name">
-
-                </TextView>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="13sp"
-                    android:id="@+id/tv_movie_nametr1"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="175dp"
-                    android:text="Name">
-
-                </TextView>
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/t2"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_width="130dp"
-                android:layout_height="194dp">
-                <ImageView
-                    android:id="@+id/img_tr2"
-                    android:layout_marginTop="12dp"
-                    android:layout_marginLeft="15dp"
-                    android:layout_width="100dp"
-                    android:layout_height="140dp"
-                    android:src="@drawable/ccccc">
-                </ImageView>
-
-                <ImageView
-                    android:layout_width="10dp"
-                    android:layout_height="10dp"
-                    app:srcCompat="@android:drawable/btn_star_big_on"
-                    android:layout_marginTop="164dp"
-                    android:layout_marginLeft="60dp"/>
-                <ImageView
-                    android:layout_width="10dp"
-                    android:layout_height="10dp"
-                    app:srcCompat="@android:drawable/btn_star_big_on"
-                    android:layout_marginTop="164dp"
-                    android:layout_marginLeft="70dp"/>
-                <ImageView
-                    android:layout_width="10dp"
-                    android:layout_height="10dp"
-                    app:srcCompat="@android:drawable/btn_star_big_on"
-                    android:layout_marginTop="164dp"
-                    android:layout_marginLeft="80dp"/>
-                <ImageView
-                    android:layout_width="10dp"
-                    android:layout_height="10dp"
-                    app:srcCompat="@android:drawable/btn_star_big_on"
-                    android:layout_marginTop="164dp"
-                    android:layout_marginLeft="90dp">
-
-                </ImageView>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="13sp"
-                    android:id="@+id/tv_movie_ratingtr2"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="160dp"
-                    android:text="Name">
-
-                </TextView>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="13sp"
-                    android:id="@+id/tv_movie_nametr2"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="175dp"
-                    android:text="Name">
-
-                </TextView>
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/t3"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_width="130dp"
-                android:layout_height="194dp">
-                <ImageView
-                    android:id="@+id/img_tr3"
-                    android:layout_marginTop="12dp"
-                    android:layout_marginLeft="15dp"
-                    android:layout_width="100dp"
-                    android:layout_height="140dp"
-                    android:src="@drawable/ccccc">
-                </ImageView>
-
-                <ImageView
-                    android:layout_width="10dp"
-                    android:layout_height="10dp"
-                    app:srcCompat="@android:drawable/btn_star_big_on"
-                    android:layout_marginTop="164dp"
-                    android:layout_marginLeft="60dp"/>
-                <ImageView
-                    android:layout_width="10dp"
-                    android:layout_height="10dp"
-                    app:srcCompat="@android:drawable/btn_star_big_on"
-                    android:layout_marginTop="164dp"
-                    android:layout_marginLeft="70dp"/>
-                <ImageView
-                    android:layout_width="10dp"
-                    android:layout_height="10dp"
-                    app:srcCompat="@android:drawable/btn_star_big_on"
-                    android:layout_marginTop="164dp"
-                    android:layout_marginLeft="80dp"/>
-                <ImageView
-                    android:layout_width="10dp"
-                    android:layout_height="10dp"
-                    app:srcCompat="@android:drawable/btn_star_big_on"
-                    android:layout_marginTop="164dp"
-                    android:layout_marginLeft="90dp">
-
-                </ImageView>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="13sp"
-                    android:id="@+id/tv_movie_ratingtr3"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="160dp"
-                    android:text="Name">
-
-                </TextView>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="13sp"
-                    android:id="@+id/tv_movie_nametr3"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="175dp"
-                    android:text="Name">
-
-                </TextView>
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/t4"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_width="130dp"
-                android:layout_height="194dp">
-                <ImageView
-                    android:id="@+id/img_tr4"
-                    android:layout_marginTop="12dp"
-                    android:layout_marginLeft="15dp"
-                    android:layout_width="100dp"
-                    android:layout_height="140dp"
-                    android:src="@drawable/ccccc">
-                </ImageView>
-
-                <ImageView
-                    android:layout_width="10dp"
-                    android:layout_height="10dp"
-                    app:srcCompat="@android:drawable/btn_star_big_on"
-                    android:layout_marginTop="164dp"
-                    android:layout_marginLeft="60dp"/>
-                <ImageView
-                    android:layout_width="10dp"
-                    android:layout_height="10dp"
-                    app:srcCompat="@android:drawable/btn_star_big_on"
-                    android:layout_marginTop="164dp"
-                    android:layout_marginLeft="70dp"/>
-                <ImageView
-                    android:layout_width="10dp"
-                    android:layout_height="10dp"
-                    app:srcCompat="@android:drawable/btn_star_big_on"
-                    android:layout_marginTop="164dp"
-                    android:layout_marginLeft="80dp"/>
-                <ImageView
-                    android:layout_width="10dp"
-                    android:layout_height="10dp"
-                    app:srcCompat="@android:drawable/btn_star_big_on"
-                    android:layout_marginTop="164dp"
-                    android:layout_marginLeft="90dp">
-
-                </ImageView>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="13sp"
-                    android:id="@+id/tv_movie_ratingtr4"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="160dp"
-                    android:text="Name">
-
-                </TextView>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="13sp"
-                    android:id="@+id/tv_movie_nametr4"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="175dp"
-                    android:text="Name">
-
-                </TextView>
-            </androidx.cardview.widget.CardView>
-
-        </LinearLayout>
+    </androidx.recyclerview.widget.RecyclerView>
 
 
-    </HorizontalScrollView>
 </LinearLayout>
 
 </RelativeLayout>

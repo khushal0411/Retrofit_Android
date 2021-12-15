@@ -1,10 +1,8 @@
 package com.nuv.retrofitapplication;
 
-import com.google.gson.JsonArray;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MoviesResponse {
@@ -14,7 +12,7 @@ public class MoviesResponse {
     private Integer page;
     @SerializedName("results")
     @Expose
-    private List<Results> results = null;
+    private List<MovieDetails> results = null;
     @SerializedName("total_pages")
     @Expose
     private Integer totalPages;
@@ -30,11 +28,11 @@ public class MoviesResponse {
         this.page = page;
     }
 
-    public List<Results> getResults() {
+    public List<MovieDetails> getResults() {
         return results;
     }
 
-    public void setResults(List<Results> results) {
+    public void setResults(List<MovieDetails> results) {
         this.results = results;
     }
 
