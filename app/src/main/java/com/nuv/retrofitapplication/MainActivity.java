@@ -5,13 +5,17 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 
+import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -21,6 +25,7 @@ import android.widget.Toast;
 
 
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Objects;
 
 import retrofit2.Call;
@@ -29,7 +34,6 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import androidx.appcompat.widget.Toolbar;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.gson.Gson;
 
@@ -42,22 +46,36 @@ public class MainActivity extends BaseActivity {
     private ArrayList<MovieDetails> toprated=new ArrayList<>();
     HomeRecyclerViewAdapter recyclerViewAdapter;
     Toolbar toolbar;
-    TextView seemore,seemore2;
+    TextView seemore,seemore2,mainheading,popularheading,topratedheading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        checklang();
         seemore=findViewById(R.id.tv_seemore);
+        mainheading=findViewById(R.id.tv_headingmain);
+        popularheading=findViewById(R.id.tv_popularmheading);
+        topratedheading=findViewById(R.id.tv_topratedmheading);
         seemore2=findViewById(R.id.tv_seemore2);
+
+
+
+        seemore.setText(R.string.see_more);
+        seemore2.setText(R.string.see_more);
+        mainheading.setText(R.string.movie_recomendation_app);
+        popularheading.setText(R.string.popular_movies);
+        topratedheading.setText(R.string.top_rated_movies);
         popularmovies_recyclerView=findViewById(R.id.rec_popularmovies);
         toprated_rec=findViewById(R.id.rec_toprated);
         toolbar=findViewById(R.id.tb_main);
 
+
+
         setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(R.drawable.back);
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
-        toolbar.setTitle("HomePage");
+        toolbar.setTitle(R.string.HomePage);
 
          toolbar.setNavigationOnClickListener(v -> finish());
           if(isConnected()) {
@@ -147,6 +165,20 @@ public class MainActivity extends BaseActivity {
 
     }
 
+    private void checklang() {
+        SharedPreferences sharedPreferences = getSharedPreferences("Movies", MODE_PRIVATE);
+        String lan=sharedPreferences.getString("langpref",null);
+        if(lan !=null) {
+            Locale mlocale = new Locale(lan);
+            Resources res = getResources();
+            DisplayMetrics dm = res.getDisplayMetrics();
+            Configuration conf = res.getConfiguration();
+            conf.locale = mlocale;
+            res.updateConfiguration(conf, dm);
+        }
+    }
+
+
     private boolean isConnected() {
         boolean connected= false;
 
@@ -160,8 +192,15 @@ public class MainActivity extends BaseActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.toolbar_menu, menu);
+        inflater.inflate(R.menu.toolbar_mainpage_menu, menu);
         MenuItem searchViewItem = menu.findItem(R.id.search);
+        MenuItem settings=menu.findItem(R.id.settings);
+
+        settings.setOnMenuItemClickListener(item -> {
+            Intent intent =new Intent(MainActivity.this, SettingsActivity.class);
+            startActivity(intent);
+            return true;
+        });
         searchViewItem.setOnMenuItemClickListener(item -> {
             Intent intent =new Intent(MainActivity.this, SearchMovieActivity.class);
             startActivity(intent);

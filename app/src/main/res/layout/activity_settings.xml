@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".SettingsActivity">
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/custom_toolbar"/>
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="@string/change_language"
+    android:layout_marginTop="20dp"
+    android:textSize="20sp"
+    android:layout_marginStart="20dp"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <Button
+        android:layout_width="wrap_content"
+        android:id="@+id/btn_lanhindi"
+        android:text="@string/hindi"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_height="wrap_content"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:id="@+id/btn_laneng"
+            android:text="@string/English"
+            android:layout_marginStart="140dp"
+            android:layout_marginTop="20dp"
+            android:layout_height="wrap_content"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:id="@+id/btn_langujarti"
+            android:text="@string/Gujarti"
+            android:layout_marginStart="260dp"
+            android:layout_marginTop="20dp"
+            android:layout_height="wrap_content"/>
+    </RelativeLayout>
+
+</LinearLayout>

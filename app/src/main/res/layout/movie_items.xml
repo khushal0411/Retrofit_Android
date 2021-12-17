@@ -7,10 +7,11 @@
     android:id="@+id/rl_list">
 
     <androidx.cardview.widget.CardView
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="4dp"
         android:layout_width="130dp"
-        android:layout_height="210dp">
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp">
         <ImageView
             android:id="@+id/img_movie"
             android:layout_marginTop="12dp"

@@ -1,9 +1,19 @@
 <resources>
-    <string name="app_name">Retrofit Application</string>
-    <string name="movie_recomendation_app">Movie Recomendation App</string>
+    <string name="app_name" translatable="false">Retrofit Application</string>
+    <string name="movie_recomendation_app" translatable="true">Movie Recomendation App</string>
     <string name="popular_movies">Popular Movies</string>
     <string name="top_rated_movies">Top Rated Movies</string>
     <string name="see_more">See more</string>
     <string name="enter_movie_to_search_from">Enter Movie To Search From</string>
     <string name="search">Search</string>
+    <string name="change_language">Change Language</string>
+    <string name="HomePage">Home Page</string>
+    <string name="PopularMovies">Popular Movies</string>
+    <string name="Topratedmovies">Top Rated Movies</string>
+    <string name="SearchMovies">Search Movies</string>
+    <string name="SettingsPage">Settings</string>
+    <string name="hindi">hindi</string>
+    <string name="Gujarti">Gujarati</string>
+    <string name="English">English</string>
+
 </resources>

@@ -12,11 +12,15 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
 
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Objects;
 
 
@@ -46,10 +50,10 @@ public class MoviesGridViewActivity extends AppCompatActivity {
         toolbar.setNavigationIcon(R.drawable.back);
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
         if(type.equals("popular")){
-            toolbar.setTitle("Popular Movies");
+            toolbar.setTitle(R.string.PopularMovies);
         }
         else {
-            toolbar.setTitle("Top Rated Movies");
+            toolbar.setTitle(R.string.Topratedmovies);
         }
 
 
@@ -76,11 +80,11 @@ swipeRefreshLayout=findViewById(R.id.swl_listdata);
             Intent intent= getIntent();
             String type= intent.getStringExtra("type");
             if(type.equals("popular")){
-                toolbar.setTitle("Popular Movies");
+                toolbar.setTitle(R.string.popular_movies);
                 load();
             }
             else {
-                toolbar.setTitle("Top Rated Movies");
+                toolbar.setTitle(R.string.top_rated_movies);
                 loadtoprated();
             }
 
@@ -161,6 +165,21 @@ swipeRefreshLayout=findViewById(R.id.swl_listdata);
             }
         });
 
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.toolbar_allpages, menu);
+        MenuItem settings=menu.findItem(R.id.settings);
+        settings.setOnMenuItemClickListener(item -> {
+            Intent intent =new Intent(MoviesGridViewActivity.this, SettingsActivity.class);
+            startActivity(intent);
+            return true;
+        });
+
+        return true;
 
     }
 

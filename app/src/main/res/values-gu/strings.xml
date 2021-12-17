@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name" translatable="false">રેટ્રોફિટ એપ્લિકેશન</string>
+    <string name="movie_recomendation_app" translatable="true">મૂવી ભલામણ એપ્લિકેશન</string>
+    <string name="popular_movies">લોકપ્રિય મૂવીઝ</string>
+    <string name="top_rated_movies">ટોચ રેટેડ મૂવીઝ</string>
+    <string name="see_more">વધુ જુઓ</string>
+    <string name = "enter_movie_to_search_from"> અહીંથી શોધવા માટે મૂવી દાખલ કરો</string>
+    <string name="search">શોધો</string>
+    <string name="change_language">ભાષા બદલો</string>
+    <string name="HomePage">હોમ પેજ</string>
+    <string name="PopularMovies">લોકપ્રિય મૂવીઝ</string>
+    <string name="Topratedmovies">ટોચ રેટેડ મૂવીઝ</string>
+    <string name="SearchMovies">ચલચિત્રો શોધો</string>
+    <string name="SettingsPage">સેટિંગ્સ</string>
+    <string name="hindi">હિન્દી</string>
+    <string name = "Gujarti">ગુજરાતી</string>
+    <string name="English">અંગ્રેજી</string>
+
+</resources>

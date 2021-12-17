@@ -26,6 +26,7 @@
                 android:layout_marginTop="40dp"
                 android:layout_marginStart="80dp"
                 android:textSize="20sp"
+                android:id="@+id/tv_headingmain"
                 android:text="@string/movie_recomendation_app">
 
             </TextView>
@@ -82,6 +83,7 @@
     android:layout_height="wrap_content"
     android:text="@string/popular_movies"
     android:layout_marginStart="10dp"
+    android:id="@+id/tv_popularmheading"
     android:layout_marginTop="320dp"
     android:textSize="20sp"
     android:textStyle="bold"
@@ -100,7 +102,7 @@
     <LinearLayout
         android:layout_marginTop="350dp"
         android:layout_width="match_parent"
-        android:layout_height="220dp"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <androidx.recyclerview.widget.RecyclerView
@@ -121,6 +123,7 @@
             android:layout_marginTop="620dp"
             android:textSize="20sp"
             android:textStyle="bold"
+            android:id="@+id/tv_topratedmheading"
             android:fontFamily="sans-serif"
             android:textColor="@color/purple_200"/>
         <TextView

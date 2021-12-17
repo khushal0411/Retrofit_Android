@@ -6,11 +6,15 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -36,7 +40,7 @@ public class SearchMovieActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(R.drawable.back);
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
-        toolbar.setTitle("Search Movies");
+        toolbar.setTitle(R.string.SearchMovies);
 
         toolbar.setNavigationOnClickListener(v -> finish());
         searchquery = findViewById(R.id.et_search);
@@ -82,45 +86,56 @@ public class SearchMovieActivity extends AppCompatActivity {
                         }
 
                     }
-
-                }
-
-                String index = sharedPreferences.getString("index", null);
-                String[] split = index.split(",");
-                for (String s : split) {
-                    MovieDetails searchresult = list1.get(Integer.parseInt(s));
-                    ArrayList<MovieDetails> com = new ArrayList<>();
-                    com.add(searchresult);
-                    String finalarray = gson.toJson(com);
-                    editor = sharedPreferences.edit();
-                    String j = sharedPreferences.getString("Finalarray", null);
-                    if (j == null) {
-                        editor.putString("Finalarray", finalarray);
-                        editor.apply();
-                    } else {
-                        ArrayList<MovieDetails> finala = gson.fromJson(j, type);
-                        finala.addAll(com);
-                        String f = gson.toJson(finala);
-                        editor.putString("Finalarray", f);
-                        editor.apply();
+                    else {
 
                     }
 
                 }
-                String finalarray = sharedPreferences.getString("Finalarray", null);
-                ArrayList<MovieDetails> finala = gson.fromJson(finalarray, type);
-                recyclerViewAdapter = new RecyclerViewAdapter(finala);
-                RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getApplication(), 3);
-                recyclerView.setLayoutManager(mLayoutManager);
-                recyclerView.setAdapter(recyclerViewAdapter);
-                recyclerViewAdapter.notifyDataSetChanged();
 
+                String index = sharedPreferences.getString("index", null);
+                if(index !=null) {
+                    String[] split = index.split(",");
+                    for (String s : split) {
+                        MovieDetails searchresult = list1.get(Integer.parseInt(s));
+                        ArrayList<MovieDetails> com = new ArrayList<>();
+                        com.add(searchresult);
+                        String finalarray = gson.toJson(com);
+                        editor = sharedPreferences.edit();
+                        String j = sharedPreferences.getString("Finalarray", null);
+                        if (j == null) {
+                            editor.putString("Finalarray", finalarray);
+                            editor.apply();
+                        } else {
+                            ArrayList<MovieDetails> finala = gson.fromJson(j, type);
+                            finala.addAll(com);
+                            String f = gson.toJson(finala);
+                            editor.putString("Finalarray", f);
+                            editor.apply();
+
+                        }
+
+                    }
+                    String finalarray = sharedPreferences.getString("Finalarray", null);
+                    ArrayList<MovieDetails> finala = gson.fromJson(finalarray, type);
+                    recyclerViewAdapter = new RecyclerViewAdapter(finala);
+                    RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getApplication(), 3);
+                    recyclerView.setLayoutManager(mLayoutManager);
+                    recyclerView.setAdapter(recyclerViewAdapter);
+                    recyclerViewAdapter.notifyDataSetChanged();
+                }
+
+                else
+                {
+                    Toast.makeText(getApplicationContext(),"Not Found",Toast.LENGTH_SHORT).show();
+                }
             });
 
         }
         else {
             Toast.makeText(getApplicationContext(),"No Internet Connection",Toast.LENGTH_LONG).show();
         }
+
+
     }
 
     private boolean isConnected() {
@@ -131,4 +146,18 @@ public class SearchMovieActivity extends AppCompatActivity {
         return connected;
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.toolbar_allpages, menu);
+        MenuItem settings=menu.findItem(R.id.settings);
+        settings.setOnMenuItemClickListener(item -> {
+            Intent intent =new Intent(SearchMovieActivity.this, SettingsActivity.class);
+            startActivity(intent);
+            return true;
+        });
+
+        return true;
+
+    }
 }

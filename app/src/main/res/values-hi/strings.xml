@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name = "app_name" translatable="false">पुराना आवेदन</string>
+    <string name = "movie_recomendation_app" translatable="true">मूवी अनुशंसा ऐप</string>
+    <string name="popular_movies">लोकप्रिय फिल्में</string>
+    <string name = "top_rated_movies">शीर्ष रेटेड फिल्में</string>
+    <string name="see_more">और देखें</string>
+    <string name="enter_movie_to_search_from">से खोजने के लिए मूवी दर्ज करें</string>
+    <string name = "search">खोज</string>
+    <string name = "change_language">भाषा बदलें</string>
+    <string name="HomePage">होम पेज</string>
+    <string name="PopularMovies">लोकप्रिय फिल्में</string>
+    <string name="Topratedmovies">टॉप रेटेड मूवी</string>
+    <string name = "SearchMovies">फ़िल्म खोजें</string>
+    <string name="SettingsPage">सेटिंग</string>
+    <string name = "hindi">हिंदी</string>
+    <string name = "Gujarti">गुजराती</string>
+    <string name = "English">अंग्रेज़ी</string>
+
+</resources>
