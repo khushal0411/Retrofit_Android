@@ -16,5 +16,7 @@
     <string name="hindi">હિન્દી</string>
     <string name = "Gujarti">ગુજરાતી</string>
     <string name="English">અંગ્રેજી</string>
-
+    <string name = "theme"> થીમ</string>
+    <string name="lighttheme">લાઇટ થીમ</string>
+    <string name = "darktheme"> ડાર્ક થીમ</string>
 </resources>

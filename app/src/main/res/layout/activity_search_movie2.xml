@@ -17,6 +17,7 @@
         android:layout_marginStart="50dp"
         android:hint="@string/enter_movie_to_search_from"
         android:autofillHints=""
+
         android:inputType="text" />
    <ImageButton
        android:id="@+id/btn_search"

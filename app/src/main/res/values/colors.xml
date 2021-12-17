@@ -11,5 +11,11 @@
     <color name="colorPrimaryDark">#f4021a</color>
     <color name="colorAccent">#FF4081</color>
 
+    <color name="fontindark">#FFFFFF</color>
+    <color name="lightbluepurple">#525EAC</color>
+    <color name="darkmode">#767874</color>
+    <color name="lightmode">#FFFFFF</color>
+    <color name="grey">#545b80</color>
+
 
 </resources>

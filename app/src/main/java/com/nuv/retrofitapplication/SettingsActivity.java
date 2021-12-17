@@ -1,6 +1,7 @@
 package com.nuv.retrofitapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
@@ -17,7 +18,7 @@ import java.util.Objects;
 
 public class SettingsActivity extends AppCompatActivity {
 Toolbar toolbar;
-Button langhi,langen,langguj;
+Button langhi,langen,langguj,darktheme,lighttheme;
 String lang;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +28,25 @@ String lang;
          langhi=findViewById(R.id.btn_lanhindi);
          langen=findViewById(R.id.btn_laneng);
          langguj=findViewById(R.id.btn_langujarti);
+         darktheme=findViewById(R.id.btn_darkmode);
+         lighttheme=findViewById(R.id.btn_lightmode);
+        setSupportActionBar(toolbar);
+        toolbar.setNavigationIcon(R.drawable.back);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
+        toolbar.setTitle(R.string.SettingsPage);
+
+
+         darktheme.setOnClickListener(v -> {
+             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+
+         });
+
+         lighttheme.setOnClickListener(v -> {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+
+         });
+
+
          langen.setOnClickListener(v -> {
              lang="en";
              changeLanguage(lang);
@@ -41,10 +61,6 @@ String lang;
              lang="gu";
              changeLanguage(lang);
          });
-        setSupportActionBar(toolbar);
-        toolbar.setNavigationIcon(R.drawable.back);
-        Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
-        toolbar.setTitle(R.string.SettingsPage);
 
         toolbar.setNavigationOnClickListener(v -> finish());
     }

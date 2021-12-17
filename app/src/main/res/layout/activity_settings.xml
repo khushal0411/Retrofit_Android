@@ -43,4 +43,32 @@
             android:layout_height="wrap_content"/>
     </RelativeLayout>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/theme"
+        />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:layout_width="wrap_content"
+            android:id="@+id/btn_lightmode"
+            android:text="@string/lighttheme"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_height="wrap_content"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:id="@+id/btn_darkmode"
+            android:text="@string/darktheme"
+            android:layout_marginStart="150dp"
+            android:layout_marginTop="20dp"
+            android:layout_height="wrap_content"/>
+
+    </RelativeLayout>
+
 </LinearLayout>
