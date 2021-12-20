@@ -8,7 +8,7 @@
 
     <ImageView
         android:id="@+id/img_backgroungimage"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_marginStart="0dp"
         android:layout_marginTop="30dp"
         android:layout_height="200dp"
@@ -31,11 +31,11 @@
         android:id="@+id/tv_movienamepage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="160dp"
+        android:layout_marginStart="190dp"
         android:layout_marginTop="260dp"
         android:text="movie"
         android:textColor="#3B6E75"
-        android:textSize="22sp"
+        android:textSize="24sp"
         android:textStyle="bold"/>
 
     <TextView
@@ -45,6 +45,7 @@
         android:layout_marginStart="30dp"
         android:layout_marginTop="360dp"
         android:text="language"
+        android:textSize="22sp"
         android:textColor="#396308"/>
 
     <TextView
@@ -54,34 +55,35 @@
         android:layout_marginStart="30dp"
         android:layout_marginTop="400dp"
         android:text="ratings"
+        android:textSize="22sp"
         android:textColor="#ED1111">
 
     </TextView>
     <ImageView
         android:layout_width="10dp"
-        android:layout_height="10dp"
+        android:layout_height="20dp"
         app:srcCompat="@android:drawable/btn_star_big_on"
         android:layout_marginTop="405dp"
-        android:layout_marginStart="110dp"
+        android:layout_marginStart="150dp"
         tools:ignore="ContentDescription" />
     <ImageView
         android:layout_width="10dp"
-        android:layout_height="10dp"
+        android:layout_height="20dp"
         app:srcCompat="@android:drawable/btn_star_big_on"
         android:layout_marginTop="405dp"
-        android:layout_marginStart="120dp"/>
+        android:layout_marginStart="160dp"/>
     <ImageView
         android:layout_width="10dp"
-        android:layout_height="10dp"
+        android:layout_height="20dp"
         app:srcCompat="@android:drawable/btn_star_big_on"
         android:layout_marginTop="405dp"
-        android:layout_marginStart="130dp"/>
+        android:layout_marginStart="170dp"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="440dp"
         android:layout_marginStart="30dp"
-        android:textSize="20sp"
+        android:textSize="22sp"
         android:text="Overview:"
         android:textStyle="bold">
 
@@ -95,7 +97,7 @@
         android:layout_marginTop="474dp"
         android:fontFamily="sans-serif-condensed"
         android:text="Overview"
-        android:textSize="16sp"
+        android:textSize="20sp"
         android:textColor="#3B6E75"/>
 
 </RelativeLayout>

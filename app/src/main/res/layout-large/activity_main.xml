@@ -24,7 +24,7 @@
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
                 android:layout_marginTop="40dp"
-                android:layout_marginStart="80dp"
+                android:layout_marginStart="170dp"
                 android:textSize="20sp"
                 android:id="@+id/tv_headingmain"
                 android:text="@string/movie_recomendation_app">
@@ -47,28 +47,28 @@
             <ImageView
                 android:layout_marginStart="2dp"
                 android:layout_marginTop="50dp"
-                android:layout_width="380dp"
+                android:layout_width="600dp"
                 android:layout_height="170dp"
                 app:srcCompat="@drawable/aa"
                 tools:ignore="ContentDescription" />
                 <ImageView
                     android:layout_marginTop="50dp"
                     android:layout_marginStart="2dp"
-                    android:layout_width="380dp"
+                    android:layout_width="600dp"
                     android:layout_height="170dp"
                     app:srcCompat="@drawable/bb"
                     tools:ignore="ContentDescription" />
                 <ImageView
                     android:layout_marginTop="50dp"
                     android:layout_marginStart="2dp"
-                    android:layout_width="380dp"
+                    android:layout_width="600dp"
                     android:layout_height="170dp"
                     app:srcCompat="@drawable/cc"
                     tools:ignore="ContentDescription" />
                 <ImageView
                     android:layout_marginTop="50dp"
                     android:layout_marginStart="2dp"
-                    android:layout_width="380dp"
+                    android:layout_width="600dp"
                     android:layout_height="170dp"
                     app:srcCompat="@drawable/dd"
                     tools:ignore="ContentDescription" />
@@ -89,17 +89,18 @@
     android:textStyle="bold"
     android:fontFamily="sans-serif"
     android:textColor="@color/purple_200"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/tv_seemore"
-        android:layout_marginTop="320dp"
-        android:layout_marginStart="310dp"
-        android:text="@string/see_more"
-        android:textStyle="bold"/>
 
 
-    <LinearLayout
+        <TextView
+            android:id="@+id/tv_seemore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="510dp"
+            android:layout_marginTop="320dp"
+            android:text="@string/see_more"
+            android:textStyle="bold" />
+
+        <LinearLayout
         android:layout_marginTop="350dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -131,7 +132,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/tv_seemore2"
             android:layout_marginTop="620dp"
-            android:layout_marginStart="310dp"
+            android:layout_marginStart="510dp"
             android:text="@string/see_more"
             android:textStyle="bold"/>
 
