@@ -2,10 +2,11 @@ package com.nuv.retrofitapplication;
 
 import androidx.annotation.NonNull;
 
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.Activity;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -25,49 +26,65 @@ import android.widget.Toast;
 
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 import androidx.appcompat.widget.Toolbar;
 
 import com.google.gson.Gson;
 
 public class MainActivity extends BaseActivity {
-    public static final String BASE_URL = "https://api.themoviedb.org/";
+
     Call<MoviesResponse> call,call2;
-    RecyclerView popularmovies_recyclerView;
-    RecyclerView toprated_rec;
-    private ArrayList<MovieDetails> popularmovies=new ArrayList<>();
-    private ArrayList<MovieDetails> toprated=new ArrayList<>();
-    HomeRecyclerViewAdapter recyclerViewAdapter;
+    RecyclerView rvPopularMovies;
+    RecyclerView rvTopRated;
+    private ArrayList<MovieDetails> popularMovies=new ArrayList<>();
+    private ArrayList<MovieDetails> topRated=new ArrayList<>();
+    RecyclerViewAdapter recyclerViewAdapter;
     Toolbar toolbar;
-    TextView seemore,seemore2,mainheading,popularheading,topratedheading;
+    TextView seeMore,seeMore2,mainHeading,popularHeading,topRatedHeading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SharedPreferences sharedPreferences = getSharedPreferences(Constants.MOVIES, MODE_PRIVATE);
+        String Theme = sharedPreferences.getString(Constants.THEME, null);
+        checkLang();
+        if(Theme !=null){
+        if(Theme.equals(Constants.CHRISTMAS)){
+            setTheme(R.style.ChristmasTheme);
+        }
+        else {
+            if(Theme.equals(Constants.DARK_MODE))
+            {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            }
+            else{
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+            }
+        }
+        }
         setContentView(R.layout.activity_main);
-        checklang();
-        seemore=findViewById(R.id.tv_seemore);
-        mainheading=findViewById(R.id.tv_headingmain);
-        popularheading=findViewById(R.id.tv_popularmheading);
-        topratedheading=findViewById(R.id.tv_topratedmheading);
-        seemore2=findViewById(R.id.tv_seemore2);
+
+        seeMore =findViewById(R.id.tv_seemore);
+        mainHeading=findViewById(R.id.tv_headingmain);
+        popularHeading=findViewById(R.id.tv_popularmheading);
+        topRatedHeading=findViewById(R.id.tv_topratedmheading);
+        seeMore2=findViewById(R.id.tv_seemore2);
 
 
 
-        seemore.setText(R.string.see_more);
-        seemore2.setText(R.string.see_more);
-        mainheading.setText(R.string.movie_recomendation_app);
-        popularheading.setText(R.string.popular_movies);
-        topratedheading.setText(R.string.top_rated_movies);
-        popularmovies_recyclerView=findViewById(R.id.rec_popularmovies);
-        toprated_rec=findViewById(R.id.rec_toprated);
+        seeMore.setText(R.string.see_more);
+        seeMore2.setText(R.string.see_more);
+        mainHeading.setText(R.string.movie_recomendation_app);
+        popularHeading.setText(R.string.popular_movies);
+        topRatedHeading.setText(R.string.top_rated_movies);
+        rvPopularMovies=findViewById(R.id.rec_popularmovies);
+        rvTopRated=findViewById(R.id.rec_toprated);
         toolbar=findViewById(R.id.tb_main);
 
 
@@ -79,19 +96,12 @@ public class MainActivity extends BaseActivity {
 
          toolbar.setNavigationOnClickListener(v -> finish());
           if(isConnected()) {
-              seemore.setOnClickListener(v -> {
+              seeMore.setOnClickListener(v -> {
                   Intent intent = new Intent(MainActivity.this, MoviesGridViewActivity.class);
-                  intent.putExtra("type", "popular");
+                  intent.putExtra(Constants.TYPE, Constants.POPULAR);
                   startActivity(intent);
               });
-
-
-              Retrofit retrofit = new Retrofit.Builder()
-                      .baseUrl(BASE_URL)
-                      .addConverterFactory(GsonConverterFactory.create())
-                      .build();
-              ApiService apiService = retrofit.create(ApiService.class);
-
+               ApiService apiService =apicall();
 
               call = apiService.getposts();
               call.enqueue(new Callback<MoviesResponse>() {
@@ -99,17 +109,19 @@ public class MainActivity extends BaseActivity {
                   public void onResponse(@NonNull Call<MoviesResponse> call, @NonNull Response<MoviesResponse> response) {
                       MoviesResponse moviesResponse = response.body();
                       assert moviesResponse != null;
-                      popularmovies = (ArrayList<MovieDetails>) moviesResponse.getResults();
-                      SharedPreferences sharedPreferences = getSharedPreferences("Movies", MODE_PRIVATE);
+                      popularMovies = (ArrayList<MovieDetails>) moviesResponse.getResults();
+                      SharedPreferences sharedPreferences = getSharedPreferences(Constants.MOVIES, MODE_PRIVATE);
                       Gson gson = new Gson();
-                      String popular = gson.toJson(popularmovies);
+                      String popular = gson.toJson(popularMovies);
                       SharedPreferences.Editor editor = sharedPreferences.edit();
-                      editor.putString("popularmovies", popular);
+                      editor.putString(Constants.POPULAR_MOVIES, popular);
                       editor.apply();
-                      recyclerViewAdapter = new HomeRecyclerViewAdapter(popularmovies);
+                      List<MovieDetails> list= popularMovies.subList(0,6);
+                      ArrayList<MovieDetails> arrayList = new ArrayList<>(list);
+                      recyclerViewAdapter = new RecyclerViewAdapter(arrayList);
                       RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplication(), LinearLayoutManager.HORIZONTAL, false);
-                      popularmovies_recyclerView.setLayoutManager(mLayoutManager);
-                      popularmovies_recyclerView.setAdapter(recyclerViewAdapter);
+                      rvPopularMovies.setLayoutManager(mLayoutManager);
+                      rvPopularMovies.setAdapter(recyclerViewAdapter);
 
                       recyclerViewAdapter.notifyDataSetChanged();
 
@@ -127,17 +139,19 @@ public class MainActivity extends BaseActivity {
                   public void onResponse(@NonNull Call<MoviesResponse> call, @NonNull Response<MoviesResponse> response) {
                       MoviesResponse mr = response.body();
                       assert mr != null;
-                      toprated = (ArrayList<MovieDetails>) mr.getResults();
+                      topRated = (ArrayList<MovieDetails>) mr.getResults();
                       SharedPreferences sharedPreferences = getSharedPreferences("Movies", MODE_PRIVATE);
                       Gson gson = new Gson();
-                      String popular = gson.toJson(toprated);
+                      String popular = gson.toJson(topRated);
                       SharedPreferences.Editor editor = sharedPreferences.edit();
-                      editor.putString("toprated", popular);
+                      editor.putString(Constants.TOP_RATED, popular);
                       editor.apply();
-                      recyclerViewAdapter = new HomeRecyclerViewAdapter(toprated);
+                      List<MovieDetails> list= topRated.subList(0,6);
+                      ArrayList<MovieDetails> arrayList = new ArrayList<>(list);
+                      recyclerViewAdapter = new RecyclerViewAdapter(arrayList);
                       RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplication(), LinearLayoutManager.HORIZONTAL, false);
-                      toprated_rec.setLayoutManager(mLayoutManager);
-                      toprated_rec.setAdapter(recyclerViewAdapter);
+                      rvTopRated.setLayoutManager(mLayoutManager);
+                      rvTopRated.setAdapter(recyclerViewAdapter);
 
                       recyclerViewAdapter.notifyDataSetChanged();
 
@@ -150,30 +164,31 @@ public class MainActivity extends BaseActivity {
               });
 
 
-              seemore2.setOnClickListener(v -> {
+              seeMore2.setOnClickListener(v -> {
                   Intent intent = new Intent(MainActivity.this, MoviesGridViewActivity.class);
-                  intent.putExtra("type", "toprated");
+                  intent.putExtra(Constants.TYPE, Constants.TOP_RATED);
                   startActivity(intent);
               });
           }
 
           else
           {
-              Toast.makeText(getApplicationContext(), "No Internet Connection", Toast.LENGTH_LONG).show();
+              Toast.makeText(getApplicationContext(), Constants.NO_INTERNET, Toast.LENGTH_LONG).show();
           }
 
 
     }
 
-    private void checklang() {
-        SharedPreferences sharedPreferences = getSharedPreferences("Movies", MODE_PRIVATE);
-        String lan=sharedPreferences.getString("langpref",null);
+    private void checkLang() {
+        SharedPreferences sharedPreferences = getSharedPreferences(Constants.MOVIES, MODE_PRIVATE);
+        String lan=sharedPreferences.getString(Constants.LANG_PREF,null);
         if(lan !=null) {
-            Locale mlocale = new Locale(lan);
+            Locale locate = new Locale(lan);
             Resources res = getResources();
             DisplayMetrics dm = res.getDisplayMetrics();
+
             Configuration conf = res.getConfiguration();
-            conf.locale = mlocale;
+            conf.locale = locate;
             res.updateConfiguration(conf, dm);
         }
     }

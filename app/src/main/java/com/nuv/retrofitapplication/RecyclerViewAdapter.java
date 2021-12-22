@@ -23,7 +23,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         RelativeLayout relativeLayout;
         TextView name,rating,date;
-        ImageView movieposter;
+        ImageView moviePoster;
 
 
         public MyViewHolder(@NonNull  View itemView) {
@@ -31,7 +31,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
          relativeLayout=itemView.findViewById(R.id.rl_list);
          name=itemView.findViewById(R.id.tv_name);
          rating=itemView.findViewById(R.id.tv_movierating);
-         movieposter=itemView.findViewById(R.id.img_movie);
+         moviePoster=itemView.findViewById(R.id.img_movie);
          date=itemView.findViewById(R.id.tv_movie_date);
         }
     }
@@ -51,17 +51,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.name.setText(r.getTitle());
         holder.rating.setText(r.getVoteAverage().toString());
         holder.date.setText(r.getReleaseDate().substring(0,4));
-        String url= "https://image.tmdb.org/t/p/w500/";
-        Glide.with(holder.itemView).load(url+ r.getPosterPath()).into(holder.movieposter);
+        String url= Constants.URL_IMAGE;
+        Glide.with(holder.itemView).load(url+ r.getPosterPath()).into(holder.moviePoster);
         holder.relativeLayout.setOnClickListener(v -> {
             Intent intent = new Intent(v.getContext(),MovieDetailsActivity.class);
-            intent.putExtra("backgroundimage",r.getBackdropPath());
-            intent.putExtra("posterimg",r.getPosterPath());
-            intent.putExtra("title",r.getTitle());
-            intent.putExtra("language",r.getOriginalLanguage());
-            intent.putExtra("popularity",r.getPopularity().toString());
-            intent.putExtra("ratings",r.getVoteAverage().toString());
-            intent.putExtra("overview",r.getOverview());
+            intent.putExtra(Constants.DETAILS,r);
             v.getContext().startActivity(intent);
 
         });

@@ -1,6 +1,7 @@
 package com.nuv.retrofitapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -28,13 +29,27 @@ import java.util.ArrayList;
 import java.util.Objects;
 public class SearchMovieActivity extends AppCompatActivity {
  Toolbar toolbar;
-    EditText searchquery;
+    EditText searchQuery;
     ImageButton search;
     RecyclerView recyclerView;
     RecyclerViewAdapter recyclerViewAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SharedPreferences sharedPreferences = getSharedPreferences(Constants.MOVIES, MODE_PRIVATE);
+        String Theme = sharedPreferences.getString(Constants.THEME, null);
+        if(Theme !=null){
+            if(Theme.equals(Constants.CHRISTMAS)){
+                setTheme(R.style.ChristmasTheme);
+            }else {
+                if(Theme.equals(Constants.DARK_MODE))
+                {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                }
+                else{
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                }
+            }}
         setContentView(R.layout.activity_search_movie2);
         toolbar = findViewById(R.id.tb_main);
         setSupportActionBar(toolbar);
@@ -43,14 +58,14 @@ public class SearchMovieActivity extends AppCompatActivity {
         toolbar.setTitle(R.string.SearchMovies);
 
         toolbar.setNavigationOnClickListener(v -> finish());
-        searchquery = findViewById(R.id.et_search);
+        searchQuery = findViewById(R.id.et_search);
         search = findViewById(R.id.btn_search);
         recyclerView = findViewById(R.id.search_recyclerview);
         if (isConnected()) {
-            SharedPreferences sharedPreferences = getSharedPreferences("Movies", MODE_PRIVATE);
+
             Gson gson = new Gson();
-            String popular1 = sharedPreferences.getString("popularmovies", "");
-            String toprated1 = sharedPreferences.getString("toprated", "");
+            String popular1 = sharedPreferences.getString(Constants.POPULAR_MOVIES, null);
+            String toprated1 = sharedPreferences.getString(Constants.TOP_RATED, null);
             Type type = new TypeToken<ArrayList<MovieDetails>>() {
             }.getType();
             ArrayList<MovieDetails> list1 = gson.fromJson(popular1, type);
@@ -59,29 +74,29 @@ public class SearchMovieActivity extends AppCompatActivity {
             list1.addAll(list2);
             search.setOnClickListener(v -> {
                 SharedPreferences.Editor editor = sharedPreferences.edit();
-                String data = sharedPreferences.getString("Finalarray", null);
+                String data = sharedPreferences.getString(Constants.FINAL_ARRAY, null);
                 if (data != null) {
-                    editor.remove("Finalarray");
-                    editor.remove("index");
+                    editor.remove(Constants.FINAL_ARRAY);
+                    editor.remove(Constants.INDEX);
                     editor.apply();
                 }
 
-                String query = searchquery.getText().toString();
+                String query = searchQuery.getText().toString();
                 int size = list1.size();
                 for (int i = 0; i < size; i++) {
                     String titlename = list1.get(i).getTitle().toUpperCase();
                     if (titlename.contains(query.toUpperCase())) {
 
-                        String json1 = sharedPreferences.getString("index", null);
+                        String json1 = sharedPreferences.getString(Constants.INDEX, null);
                         if (json1 == null) {
                             editor = sharedPreferences.edit();
-                            editor.putString("index", String.valueOf(i));
+                            editor.putString(Constants.INDEX, String.valueOf(i));
                             editor.apply();
                         } else {
-                            json1 = sharedPreferences.getString("index", null);
+                            json1 = sharedPreferences.getString(Constants.INDEX, null);
                             String combined = json1 + "," + i;
                             editor = sharedPreferences.edit();
-                            editor.putString("index", combined);
+                            editor.putString(Constants.INDEX, combined);
                             editor.apply();
                         }
 
@@ -92,7 +107,7 @@ public class SearchMovieActivity extends AppCompatActivity {
 
                 }
 
-                String index = sharedPreferences.getString("index", null);
+                String index = sharedPreferences.getString(Constants.INDEX, null);
                 if(index !=null) {
                     String[] split = index.split(",");
                     for (String s : split) {
@@ -101,21 +116,21 @@ public class SearchMovieActivity extends AppCompatActivity {
                         com.add(searchresult);
                         String finalarray = gson.toJson(com);
                         editor = sharedPreferences.edit();
-                        String j = sharedPreferences.getString("Finalarray", null);
+                        String j = sharedPreferences.getString(Constants.FINAL_ARRAY, null);
                         if (j == null) {
-                            editor.putString("Finalarray", finalarray);
+                            editor.putString(Constants.FINAL_ARRAY, finalarray);
                             editor.apply();
                         } else {
                             ArrayList<MovieDetails> finala = gson.fromJson(j, type);
                             finala.addAll(com);
                             String f = gson.toJson(finala);
-                            editor.putString("Finalarray", f);
+                            editor.putString(Constants.FINAL_ARRAY, f);
                             editor.apply();
 
                         }
 
                     }
-                    String finalarray = sharedPreferences.getString("Finalarray", null);
+                    String finalarray = sharedPreferences.getString(Constants.FINAL_ARRAY, null);
                     ArrayList<MovieDetails> finala = gson.fromJson(finalarray, type);
                     recyclerViewAdapter = new RecyclerViewAdapter(finala);
                     RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getApplication(), 3);
@@ -126,15 +141,14 @@ public class SearchMovieActivity extends AppCompatActivity {
 
                 else
                 {
-                    Toast.makeText(getApplicationContext(),"Not Found",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),Constants.NOT_FOUND,Toast.LENGTH_SHORT).show();
                 }
             });
 
         }
         else {
-            Toast.makeText(getApplicationContext(),"No Internet Connection",Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(),Constants.NO_INTERNET,Toast.LENGTH_LONG).show();
         }
-
 
     }
 

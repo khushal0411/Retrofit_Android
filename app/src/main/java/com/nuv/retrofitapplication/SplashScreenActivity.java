@@ -13,25 +13,22 @@ import android.widget.TextView;
 public class SplashScreenActivity extends AppCompatActivity {
 ImageView logo;
 TextView title;
-Animation t,z;
+Animation titleAnimation, logoAnimation;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
         logo=findViewById(R.id.img_applogo);
         title=findViewById(R.id.tv_splashscreentitle);
-        t= AnimationUtils.loadAnimation(this,R.anim.translate);
-        title.setAnimation(t);
-        z=AnimationUtils.loadAnimation(this,R.anim.logorotate);
-        logo.setAnimation(z);
+        titleAnimation = AnimationUtils.loadAnimation(this,R.anim.translate);
+        title.setAnimation(titleAnimation);
+        logoAnimation =AnimationUtils.loadAnimation(this,R.anim.logorotate);
+        logo.setAnimation(logoAnimation);
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Intent intent = new Intent(SplashScreenActivity.this, MainActivity.class);
-                startActivity(intent);
-                finish();
-            }
+        new Handler().postDelayed(() -> {
+            Intent intent = new Intent(SplashScreenActivity.this, MainActivity.class);
+            startActivity(intent);
+            finish();
         },3000);
 
 

@@ -29,7 +29,7 @@
         android:layout_height="wrap_content"/>
         <Button
             android:layout_width="wrap_content"
-            android:id="@+id/btn_laneng"
+            android:id="@+id/btn_LanEng"
             android:text="@string/English"
             android:layout_marginStart="140dp"
             android:layout_marginTop="20dp"
@@ -66,6 +66,13 @@
             android:id="@+id/btn_darkmode"
             android:text="@string/darktheme"
             android:layout_marginStart="150dp"
+            android:layout_marginTop="20dp"
+            android:layout_height="wrap_content"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:id="@+id/btn_christmasmode"
+            android:text="@string/christmas"
+            android:layout_marginStart="280dp"
             android:layout_marginTop="20dp"
             android:layout_height="wrap_content"/>
 

@@ -14,7 +14,7 @@
         android:layout_height="200dp"
         android:paddingStart="12dp"
         android:paddingEnd="15dp"
-        app:srcCompat="@drawable/c"
+        app:srcCompat="@drawable/aa"
         tools:ignore="ContentDescription" />
     <ImageView
         android:id="@+id/img_movieposter"
@@ -22,7 +22,7 @@
         android:layout_height="140dp"
         android:layout_marginTop="190dp"
         android:layout_marginStart="30dp"
-        app:srcCompat="@drawable/c"
+        app:srcCompat="@drawable/cc"
         tools:ignore="ContentDescription" />
 
 

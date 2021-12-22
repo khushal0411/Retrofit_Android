@@ -15,7 +15,8 @@
     <color name="lightbluepurple">#525EAC</color>
     <color name="darkmode">#767874</color>
     <color name="lightmode">#FFFFFF</color>
-    <color name="grey">#545b80</color>
-
+    <color name="red">#EF7979</color>
+    <color name="darkred">#810404</color>
+    <color name="green">#38A176</color>
 
 </resources>

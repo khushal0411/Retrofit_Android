@@ -19,4 +19,5 @@
     <string name = "theme">थीम</string>
     <string name = "lighttheme">लाइट थीम</string>
     <string name = "darktheme">डार्क थीम</string>
+    <string name="christmas">Christmas</string>
 </resources>

@@ -1,8 +1,10 @@
 package com.nuv.retrofitapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -16,6 +18,20 @@ public class MovieDetailsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SharedPreferences sharedPreferences = getSharedPreferences(Constants.MOVIES, MODE_PRIVATE);
+        String Theme = sharedPreferences.getString(Constants.THEME, null);
+        if(Theme !=null){
+            if(Theme.equals(Constants.CHRISTMAS)){
+                setTheme(R.style.ChristmasTheme);
+            }else {
+                if(Theme.equals(Constants.DARK_MODE))
+                {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                }
+                else{
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                }
+            }}
         setContentView(R.layout.activity_movie_details);
         background=findViewById(R.id.img_backgroungimage);
         poster=findViewById(R.id.img_movieposter);
@@ -24,20 +40,16 @@ public class MovieDetailsActivity extends AppCompatActivity {
         ratings=findViewById(R.id.tv_ratings);
         overview=findViewById(R.id.tv_movieoverview);
         Intent intent =getIntent();
-        String backgroundpath=intent.getStringExtra("backgroundimage");
-        String posterpath=intent.getStringExtra("posterimg");
-        String titlename=intent.getStringExtra("title");
-        String lan= intent.getStringExtra("language");
-        String rat= intent.getStringExtra("ratings");
-        String overv= intent.getStringExtra("overview");
 
-        String url= "https://image.tmdb.org/t/p/w500/";
-        Glide.with(getApplicationContext()).load(url+backgroundpath).into(background);
-        Glide.with(getApplicationContext()).load(url+posterpath).into(poster);
-        name.setText(titlename);
-        language.setText("Language: "+lan);
-        ratings.setText("Ratings :"+rat);
-        overview.setText(overv);
+        MovieDetails movieDetails= (MovieDetails) intent.getSerializableExtra(Constants.DETAILS);
+
+        String url= Constants.URL_IMAGE;
+        Glide.with(getApplicationContext()).load(url+movieDetails.getBackdropPath()).into(background);
+        Glide.with(getApplicationContext()).load(url+movieDetails.getPosterPath()).into(poster);
+        name.setText(movieDetails.getOriginalTitle());
+        language.setText(Constants.LANGUAGE+movieDetails.getOriginalLanguage());
+        ratings.setText(Constants.RATINGS+movieDetails.getVoteAverage());
+        overview.setText(movieDetails.getOverview());
 
     }
 }
