@@ -12,5 +12,7 @@
     <string name="SearchMovies">Search Movies</string>
     <string name="SettingsPage">Settings</string>
     <string name="christmas">Christmas</string>
+    <string name="drawer_open">drawer open</string>
+    <string name="drawer_close">drawer close</string>
 
 </resources>

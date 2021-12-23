@@ -40,13 +40,12 @@ import com.google.gson.Gson;
 public class MainActivity extends BaseActivity {
 
     Call<MoviesResponse> call,call2;
-    RecyclerView rvPopularMovies;
-    RecyclerView rvTopRated;
+    RecyclerView rvPopularMovies,rvTopRated;
     private ArrayList<MovieDetails> popularMovies=new ArrayList<>();
     private ArrayList<MovieDetails> topRated=new ArrayList<>();
     RecyclerViewAdapter recyclerViewAdapter;
     Toolbar toolbar;
-    TextView seeMore,seeMore2,mainHeading,popularHeading,topRatedHeading;
+    TextView seeMore,seeMore2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,18 +70,9 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
 
         seeMore =findViewById(R.id.tv_seemore);
-        mainHeading=findViewById(R.id.tv_headingmain);
-        popularHeading=findViewById(R.id.tv_popularmheading);
-        topRatedHeading=findViewById(R.id.tv_topratedmheading);
         seeMore2=findViewById(R.id.tv_seemore2);
 
 
-
-        seeMore.setText(R.string.see_more);
-        seeMore2.setText(R.string.see_more);
-        mainHeading.setText(R.string.movie_recomendation_app);
-        popularHeading.setText(R.string.popular_movies);
-        topRatedHeading.setText(R.string.top_rated_movies);
         rvPopularMovies=findViewById(R.id.rec_popularmovies);
         rvTopRated=findViewById(R.id.rec_toprated);
         toolbar=findViewById(R.id.tb_main);
@@ -92,9 +82,13 @@ public class MainActivity extends BaseActivity {
         setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(R.drawable.back);
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
-        toolbar.setTitle(R.string.HomePage);
+        toolbar.setTitle(R.string.movie_recomendation_app);
 
-         toolbar.setNavigationOnClickListener(v -> finish());
+         toolbar.setNavigationOnClickListener(v -> {
+             Intent intent = new Intent(MainActivity.this, DrawerLayoutActivity.class);
+             startActivity(intent);
+         });
+
           if(isConnected()) {
               seeMore.setOnClickListener(v -> {
                   Intent intent = new Intent(MainActivity.this, MoviesGridViewActivity.class);

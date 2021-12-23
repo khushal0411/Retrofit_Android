@@ -19,6 +19,10 @@
     <string name="lighttheme">Light Theme</string>
     <string name="darktheme">Dark Theme</string>
     <string name="christmas">Christmas</string>
+    <string name="drawer_open">drawer open</string>
+    <string name="drawer_close">drawer close</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>

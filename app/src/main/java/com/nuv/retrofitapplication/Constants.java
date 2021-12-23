@@ -20,5 +20,6 @@ public class Constants {
     public static String LANGUAGE="Language: ";
     public static String RATINGS="Rating: ";
     public static String URL_IMAGE= "https://image.tmdb.org/t/p/w500/";
+    public static final String COLOR_BASE_URL="https://private-4063d9-practicalassignment.apiary-mock.com/";
 
 }
