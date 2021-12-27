@@ -22,13 +22,13 @@ public class DrawerLayoutActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drawer_layout);
-        DefaultColorFragment defaultColorFragment =new DefaultColorFragment();
+       HomeFragment homeFragment = new HomeFragment();
         FragmentTransaction transactions = getSupportFragmentManager().beginTransaction();
-        transactions.replace(R.id.frame, defaultColorFragment);
+        transactions.replace(R.id.frame, homeFragment);
         transactions.commit();
 
         Toolbar toolbar= findViewById(R.id.tb_main);
-        toolbar.setTitle("Home Screen ");
+        toolbar.setTitle(R.string.Home_Screen);
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -47,13 +47,18 @@ public class DrawerLayoutActivity extends AppCompatActivity {
             }
             else if(itemId==R.id.cr_app)
             {
-                getSupportActionBar().setTitle("Color Selection App");
+                getSupportActionBar().setTitle(R.string.COLOR_SELECTION_APP);
                 frag =new DefaultColorFragment();
-            }
-            if(frag !=null)
-            {
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.frame, frag);
+                transaction.commit();
+                drawerLayout.closeDrawers();
+                return true;
+            }
+            else
+            { getSupportActionBar().setTitle(R.string.HOME_SCREEN);
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.frame, homeFragment);
                 transaction.commit();
                 drawerLayout.closeDrawers();
                 return true;

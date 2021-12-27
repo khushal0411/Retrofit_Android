@@ -1,13 +1,19 @@
 package com.nuv.retrofitapplication;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,11 +26,13 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 
-public class DefaultColorFragment extends Fragment {
+public class DefaultColorFragment extends Fragment implements ColorRecyclerViewAdapter.OnColorSelect {
     Call<ArrayList<ColorApiResponse>> call;
-    private ArrayList<ColorApiResponse> colorApiResponses;
-    TextView test;
+
     ArrayList<String> colors= new ArrayList<>();
+    RecyclerView rvColors;
+    Button next;
+    ColorRecyclerViewAdapter colorRecyclerViewAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -42,7 +50,11 @@ public class DefaultColorFragment extends Fragment {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         ApiService apiService = retrofit.create(ApiService.class);
-         test=view.findViewById(R.id.tv_test);
+
+         rvColors=view.findViewById(R.id.rv_colors);
+         next=view.findViewById(R.id.btn_next);
+
+       //checkButton();
 
         call=apiService.getColorResponse();
         call.enqueue(new Callback<ArrayList<ColorApiResponse>>() {
@@ -57,8 +69,11 @@ public class DefaultColorFragment extends Fragment {
                         colors.add(response.body().get(i).getValues().get(j).getColor());
                     }
                 }
-                Toast.makeText(view.getContext(),response.body().get(0).getValues().get(0).getColor(),Toast.LENGTH_SHORT).show();
-              test.setText(colors.toString());
+                colorRecyclerViewAdapter = new ColorRecyclerViewAdapter(colors,DefaultColorFragment.this::colorSelected);
+                RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(view.getContext(),3);
+                rvColors.setLayoutManager(mLayoutManager);
+                rvColors.setAdapter(colorRecyclerViewAdapter);
+                colorRecyclerViewAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -69,4 +84,35 @@ public class DefaultColorFragment extends Fragment {
 
         return view;
     }
+
+    private void checkButton() {
+        next.setEnabled(true);
+    }
+
+    @Override
+    public void colorSelected(ArrayList<String> selectedIndex) {
+        if(selectedIndex.size()==3){
+         checkButton();
+         next.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View v) {
+
+                 Bundle bundle = new Bundle();
+                  bundle.putStringArrayList(Constants.COLOR_SELECTED_INDEX,selectedIndex);
+                  bundle.putStringArrayList(Constants.COLOR_ARRAYLIST,colors);
+                 HomeFragment homepage = new HomeFragment();
+                 homepage.setArguments(bundle);
+                 FragmentManager fragmentManager = getFragmentManager();
+                 FragmentTransaction transaction =fragmentManager.beginTransaction();
+                 transaction.replace(R.id.frame, homepage);
+                 transaction.commit();
+             }
+         });
+    }
+    else {
+        next.setEnabled(false);
+        }
+    }
+
+
 }

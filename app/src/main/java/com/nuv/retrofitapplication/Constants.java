@@ -2,6 +2,8 @@ package com.nuv.retrofitapplication;
 
 public class Constants {
     public static final String BASE_URL = "https://api.themoviedb.org/";
+    public static final String COLOR_SELECTED_INDEX ="INDEX" ;
+    public static final String COLOR_ARRAYLIST = "COLOR ArrayList";
     public static String TYPE="type";
     public static String POPULAR="popular";
     public static String MOVIES="Movies";

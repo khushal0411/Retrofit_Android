@@ -3,4 +3,10 @@
     <string name="christmas">Christmas</string>
     <string name="drawer_open">drawer open</string>
     <string name="drawer_close">drawer close</string>
+    <string name="COLOR_SELECTION_APP">Color Selection App</string>
+    <string name="HOME_SCREEN">Home Screen</string>
+    <string name="ARRAY_LIST_INDEX">Arraylist</string>
+    <string name="COLOR_ARRAYLIST">ColorList</string>
+    <string name="INDRODUCTION_MESSAGE_COLORAPP">Welcome To Page where the background color is the combination of your selected three colors......</string>
+    <string name="Home_Screen">\"Home Screen \"</string>
 </resources>

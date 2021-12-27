@@ -18,5 +18,6 @@
     <color name="red">#EF7979</color>
     <color name="darkred">#810404</color>
     <color name="green">#38A176</color>
+    <color name="cardBackgroundColor">#807C7C</color>
 
 </resources>
