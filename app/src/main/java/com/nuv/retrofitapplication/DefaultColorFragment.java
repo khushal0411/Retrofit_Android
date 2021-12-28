@@ -1,6 +1,5 @@
 package com.nuv.retrofitapplication;
 
-import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -14,7 +13,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -100,7 +98,7 @@ public class DefaultColorFragment extends Fragment implements ColorRecyclerViewA
                  Bundle bundle = new Bundle();
                   bundle.putStringArrayList(Constants.COLOR_SELECTED_INDEX,selectedIndex);
                   bundle.putStringArrayList(Constants.COLOR_ARRAYLIST,colors);
-                 HomeFragment homepage = new HomeFragment();
+                 ColorChangeFragment homepage = new ColorChangeFragment();
                  homepage.setArguments(bundle);
                  FragmentManager fragmentManager = getFragmentManager();
                  FragmentTransaction transaction =fragmentManager.beginTransaction();

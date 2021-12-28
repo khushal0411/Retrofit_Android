@@ -15,7 +15,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 
-public class HomeFragment extends Fragment {
+public class ColorChangeFragment extends Fragment {
 TextView home;
 FrameLayout colorBackground;
 ArrayList<Integer> red= new ArrayList<>();

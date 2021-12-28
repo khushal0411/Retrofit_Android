@@ -15,4 +15,6 @@ public interface ApiService {
     @GET("colours")
     Call<ArrayList<ColorApiResponse>> getColorResponse();
 
+    @GET("videos")
+    Call<VideoResponse> getVideoResponse();
 }

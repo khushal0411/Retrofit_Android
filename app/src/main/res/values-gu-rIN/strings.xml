@@ -8,5 +8,5 @@
     <string name="ARRAY_LIST_INDEX">Arraylist</string>
     <string name="COLOR_ARRAYLIST">ColorList</string>
     <string name="INDRODUCTION_MESSAGE_COLORAPP">Welcome To Page where the background color is the combination of your selected three colors......</string>
-    <string name="Home_Screen">\"Home Screen \"</string>
+    <string name="Home_Screen">Home Screen</string>
 </resources>

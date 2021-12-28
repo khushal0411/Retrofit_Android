@@ -1,6 +1,5 @@
 package com.nuv.retrofitapplication;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -10,7 +9,6 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.MenuItem;
 
 import com.google.android.material.navigation.NavigationView;
 
@@ -22,9 +20,9 @@ public class DrawerLayoutActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drawer_layout);
-       HomeFragment homeFragment = new HomeFragment();
+      VideoListFragment videoListFragment =new VideoListFragment();
         FragmentTransaction transactions = getSupportFragmentManager().beginTransaction();
-        transactions.replace(R.id.frame, homeFragment);
+        transactions.replace(R.id.frame, videoListFragment);
         transactions.commit();
 
         Toolbar toolbar= findViewById(R.id.tb_main);
@@ -58,7 +56,8 @@ public class DrawerLayoutActivity extends AppCompatActivity {
             else
             { getSupportActionBar().setTitle(R.string.HOME_SCREEN);
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.frame, homeFragment);
+                ColorChangeFragment colorChangeFragment =new ColorChangeFragment();
+                transaction.replace(R.id.frame, colorChangeFragment);
                 transaction.commit();
                 drawerLayout.closeDrawers();
                 return true;
