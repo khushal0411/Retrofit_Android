@@ -30,7 +30,7 @@ ArrayList<Integer> blue= new ArrayList<>();
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view=inflater.inflate(R.layout.fragment_home, container, false);
+        View view=inflater.inflate(R.layout.fragment_color_change, container, false);
         ArrayList<String> finalColorArray,color;
         home=view.findViewById(R.id.tv_homefrag);
         colorBackground=view.findViewById(R.id.fl_colorChange);

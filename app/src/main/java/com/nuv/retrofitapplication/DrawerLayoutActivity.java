@@ -20,9 +20,9 @@ public class DrawerLayoutActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drawer_layout);
-      VideoListFragment videoListFragment =new VideoListFragment();
+        HomeFragment homeFragment= new HomeFragment();
         FragmentTransaction transactions = getSupportFragmentManager().beginTransaction();
-        transactions.replace(R.id.frame, videoListFragment);
+        transactions.replace(R.id.frame, homeFragment);
         transactions.commit();
 
         Toolbar toolbar= findViewById(R.id.tb_main);
@@ -53,11 +53,20 @@ public class DrawerLayoutActivity extends AppCompatActivity {
                 drawerLayout.closeDrawers();
                 return true;
             }
+            else if(itemId==R.id.vapi_app)
+            {
+                getSupportActionBar().setTitle(R.string.VideoAPIFRagment);
+                frag =new VideoListFragment();
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.frame, frag);
+                transaction.commit();
+                drawerLayout.closeDrawers();
+                return true;
+            }
             else
             { getSupportActionBar().setTitle(R.string.HOME_SCREEN);
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                ColorChangeFragment colorChangeFragment =new ColorChangeFragment();
-                transaction.replace(R.id.frame, colorChangeFragment);
+                transaction.replace(R.id.frame, homeFragment);
                 transaction.commit();
                 drawerLayout.closeDrawers();
                 return true;

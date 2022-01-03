@@ -6,15 +6,24 @@
             android:checked="true"
             android:title="Home"
             android:icon="@drawable/home"
+
             />
         <item
             android:id="@+id/mr_app"
             android:title="Movie Recomendation App"
-            android:icon="@drawable/mr_app"/>
+            android:icon="@drawable/mr_app"
+           />
 
         <item
             android:id="@+id/cr_app"
             android:title="Color API Application"
+
             android:icon="@drawable/color_art"/>
+        <item
+            android:id="@+id/vapi_app"
+            android:title="@string/video_api_app"
+
+            android:icon="@drawable/video"
+            />
     </group>
 </menu>

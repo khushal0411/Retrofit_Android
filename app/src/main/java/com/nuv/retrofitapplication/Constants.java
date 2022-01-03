@@ -24,4 +24,7 @@ public class Constants {
     public static String URL_IMAGE= "https://image.tmdb.org/t/p/w500/";
     public static final String COLOR_BASE_URL="https://private-4063d9-practicalassignment.apiary-mock.com/";
     public static final String VIDEO_BASE_URL="https://private-4063d9-practicalassignment.apiary-mock.com/";
+    public  static final String VIDEO_URL="VideoURl";
+    public static final String VIDEO_NAME="VideoName";
+    public  static final String ERROR="Error Receiving Data";
 }

@@ -30,8 +30,8 @@ Call<VideoResponse> call;
 ArrayList<VideoDetails> videoDetails = new ArrayList<>();
 VideoRecyclerViewAdapter videoRecyclerViewAdapter;
 RecyclerView recyclerView;
-ImageView thumbnail1,thumbnail2,thumbnail3;
-
+ImageView thumbnail,thumbnail2;
+TextView name,name2;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,9 +47,12 @@ ImageView thumbnail1,thumbnail2,thumbnail3;
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         recyclerView=view.findViewById(R.id.rec_videos);
-        thumbnail1=view.findViewById(R.id.img_videothumbnail1);
-        thumbnail2=view.findViewById(R.id.img_videothumbnail2);
-        thumbnail3=view.findViewById(R.id.img_videothumbnail3);
+        name=view.findViewById(R.id.tv_videolist1);
+        name2=view.findViewById(R.id.tv_videolist2);
+        thumbnail2=view.findViewById(R.id.img_videolist2);
+        thumbnail=view.findViewById(R.id.img_videolist1);
+
+
         ApiService apiService = retrofit.create(ApiService.class);
         call=apiService.getVideoResponse();
         call.enqueue(new Callback<VideoResponse>() {
@@ -63,15 +66,15 @@ ImageView thumbnail1,thumbnail2,thumbnail3;
                 recyclerView.setLayoutManager(mLayoutManager);
                 recyclerView.setAdapter(videoRecyclerViewAdapter);
                 videoRecyclerViewAdapter.notifyDataSetChanged();
-                Glide.with(view.getContext()).load(videoDetails.get(0).getThumbnailUrl()).into(thumbnail1);
-                Glide.with(view.getContext()).load(videoDetails.get(1).getThumbnailUrl()).into(thumbnail2);
-                Glide.with(view.getContext()).load(videoDetails.get(2).getThumbnailUrl()).into(thumbnail3);
-
+                name.setText(videoDetails.get(0).getTitle());
+                Glide.with(view.getContext()).load(videoDetails.get(0).getThumbnailUrl()).fitCenter().into(thumbnail);
+                name2.setText(videoDetails.get(1).getTitle());
+                Glide.with(view.getContext()).load(videoDetails.get(1).getThumbnailUrl()).fitCenter().into(thumbnail2);
             }
 
             @Override
             public void onFailure(@NonNull Call<VideoResponse> call, @NonNull Throwable t) {
-                Toast.makeText(view.getContext(),"Error Recieving Data",Toast.LENGTH_SHORT).show();
+                Toast.makeText(view.getContext(),Constants.ERROR,Toast.LENGTH_SHORT).show();
             }
         });
         return view;
