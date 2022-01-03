@@ -74,4 +74,10 @@ public class DrawerLayoutActivity extends AppCompatActivity {
             return true;
         });
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+    }
 }

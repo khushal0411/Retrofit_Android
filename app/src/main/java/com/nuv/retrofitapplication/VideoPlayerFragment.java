@@ -3,7 +3,9 @@ package com.nuv.retrofitapplication;
 
 import android.os.Bundle;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,7 +27,15 @@ SimpleExoPlayer simpleExoPlayer;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                VideoListFragment videoListFragment= new VideoListFragment();
+                FragmentTransaction transactions = getParentFragmentManager().beginTransaction();
+                transactions.replace(R.id.frame, videoListFragment);
+                transactions.commit();
+            }
+        };requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
     }
 
     @Override
@@ -44,8 +54,42 @@ SimpleExoPlayer simpleExoPlayer;
         simpleExoPlayer.addMediaItem(mediaItem);
         simpleExoPlayer.prepare();
         simpleExoPlayer.play();
+
         return view;
 
     }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        simpleExoPlayer.stop();
+        simpleExoPlayer.setPlayWhenReady(false);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        simpleExoPlayer.stop();
+        simpleExoPlayer.setPlayWhenReady(false);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        simpleExoPlayer.stop();
+        simpleExoPlayer.setPlayWhenReady(false);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        String videoUrl= getArguments().getString(Constants.VIDEO_URL);
+        playerView.setPlayer(simpleExoPlayer);
+        MediaItem mediaItem = MediaItem.fromUri(videoUrl);
+        simpleExoPlayer.addMediaItem(mediaItem);
+        simpleExoPlayer.prepare();
+        simpleExoPlayer.play();
+    }
+
 
 }

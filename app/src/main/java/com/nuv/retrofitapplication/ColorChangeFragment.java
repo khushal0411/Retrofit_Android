@@ -3,8 +3,10 @@ package com.nuv.retrofitapplication;
 import android.graphics.Color;
 import android.os.Bundle;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.core.graphics.ColorUtils;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,7 +26,15 @@ ArrayList<Integer> blue= new ArrayList<>();
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                DefaultColorFragment defaultColorFragment = new DefaultColorFragment();
+                FragmentTransaction transactions = getParentFragmentManager().beginTransaction();
+                transactions.replace(R.id.frame, defaultColorFragment);
+                transactions.commit();
+            }
+        };requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
     }
 
     @Override

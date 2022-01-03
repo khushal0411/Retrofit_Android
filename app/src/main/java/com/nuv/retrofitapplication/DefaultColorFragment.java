@@ -2,6 +2,7 @@ package com.nuv.retrofitapplication;
 
 import android.os.Bundle;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -35,7 +36,15 @@ public class DefaultColorFragment extends Fragment implements ColorRecyclerViewA
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+               HomeFragment homeFragment = new HomeFragment();
+                FragmentTransaction transactions = getParentFragmentManager().beginTransaction();
+                transactions.replace(R.id.frame, homeFragment);
+                transactions.commit();
+            }
+        };requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
     }
 
     @Override
