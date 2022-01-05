@@ -26,18 +26,20 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 
 public class MoviesGridViewActivity extends BaseActivity {
-    RecyclerView recyclerView;
+    @BindView(R.id.rv_recactivity) RecyclerView recyclerView;
     RecyclerViewAdapter recyclerViewAdapter;
     Call<MoviesResponse> call2;
-    SwipeRefreshLayout swipeRefreshLayout;
+    @BindView(R.id.swl_listdata) SwipeRefreshLayout swipeRefreshLayout;
     ArrayList<MovieDetails> results;
-    Toolbar toolbar;
+    @BindView(R.id.tb_main) Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,9 +59,9 @@ public class MoviesGridViewActivity extends BaseActivity {
                 }
             }}
         setContentView(R.layout.activity_popular_movies);
+        ButterKnife.bind(this);
         Intent intent= getIntent();
         String type= intent.getStringExtra(Constants.TYPE);
-        toolbar=findViewById(R.id.tb_main);
         setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(R.drawable.back);
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
@@ -74,9 +76,6 @@ public class MoviesGridViewActivity extends BaseActivity {
         toolbar.setNavigationOnClickListener(v -> finish());
 
 loadData();
-
-swipeRefreshLayout=findViewById(R.id.swl_listdata);
-        recyclerView=findViewById(R.id.rv_recactivity);
 
         swipeRefreshLayout.setOnRefreshListener(() -> {
             swipeRefreshLayout.setRefreshing(false);

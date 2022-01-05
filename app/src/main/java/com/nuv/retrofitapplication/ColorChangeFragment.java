@@ -16,16 +16,20 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 
 public class ColorChangeFragment extends Fragment {
-TextView home;
-FrameLayout colorBackground;
+@BindView(R.id.tv_homefrag) TextView home;
+@BindView(R.id.fl_colorChange) FrameLayout colorBackground;
 ArrayList<Integer> red= new ArrayList<>();
 ArrayList<Integer> green= new ArrayList<>();
 ArrayList<Integer> blue= new ArrayList<>();
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         OnBackPressedCallback callback = new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
@@ -41,9 +45,8 @@ ArrayList<Integer> blue= new ArrayList<>();
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.fragment_color_change, container, false);
+        ButterKnife.bind(this,view);
         ArrayList<String> finalColorArray,color;
-        home=view.findViewById(R.id.tv_homefrag);
-        colorBackground=view.findViewById(R.id.fl_colorChange);
         if (getArguments() != null) {
             finalColorArray = getArguments().getStringArrayList(Constants.COLOR_SELECTED_INDEX);
             color=getArguments().getStringArrayList(Constants.COLOR_ARRAYLIST);

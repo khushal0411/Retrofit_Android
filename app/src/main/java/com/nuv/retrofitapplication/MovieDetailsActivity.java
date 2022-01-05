@@ -11,10 +11,17 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class MovieDetailsActivity extends AppCompatActivity {
 
-    ImageView background, poster;
-    TextView name,language,ratings,overview;
+    @BindView(R.id.img_backgroungimage) ImageView background;
+    @BindView(R.id.img_movieposter) ImageView poster;
+    @BindView(R.id.tv_movienamepage) TextView name;
+    @BindView(R.id.tv_language) TextView language;
+    @BindView(R.id.tv_ratings) TextView ratings;
+    @BindView(R.id.tv_movieoverview) TextView overview;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,12 +40,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
                 }
             }}
         setContentView(R.layout.activity_movie_details);
-        background=findViewById(R.id.img_backgroungimage);
-        poster=findViewById(R.id.img_movieposter);
-        name=findViewById(R.id.tv_movienamepage);
-        language=findViewById(R.id.tv_language);
-        ratings=findViewById(R.id.tv_ratings);
-        overview=findViewById(R.id.tv_movieoverview);
+        ButterKnife.bind(this);
         Intent intent =getIntent();
 
         MovieDetails movieDetails= (MovieDetails) intent.getSerializableExtra(Constants.DETAILS);

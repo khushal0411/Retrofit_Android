@@ -10,16 +10,18 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class SplashScreenActivity extends AppCompatActivity {
-ImageView logo;
-TextView title;
-Animation titleAnimation, logoAnimation;
+@BindView(R.id.img_applogo) ImageView logo;
+@BindView(R.id.tv_splashscreentitle) TextView title;
+Animation titleAnimation,logoAnimation;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
-        logo=findViewById(R.id.img_applogo);
-        title=findViewById(R.id.tv_splashscreentitle);
+        ButterKnife.bind(this);
         titleAnimation = AnimationUtils.loadAnimation(this,R.anim.translate);
         title.setAnimation(titleAnimation);
         logoAnimation =AnimationUtils.loadAnimation(this,R.anim.logorotate);

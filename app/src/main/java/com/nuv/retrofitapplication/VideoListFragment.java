@@ -21,6 +21,8 @@ import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -31,9 +33,11 @@ public class VideoListFragment extends Fragment {
 Call<VideoResponse> call;
 ArrayList<VideoDetails> videoDetails = new ArrayList<>();
 VideoRecyclerViewAdapter videoRecyclerViewAdapter;
-RecyclerView recyclerView;
-ImageView thumbnail,thumbnail2;
-TextView name,name2;
+@BindView(R.id.rec_videos) RecyclerView recyclerView;
+@BindView(R.id.img_videolist1) ImageView thumbnail;
+@BindView(R.id.img_videolist2) ImageView thumbnail2;
+@BindView(R.id.tv_videolist1) TextView name;
+@BindView(R.id.tv_videolist2) TextView name2;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,17 +56,11 @@ TextView name,name2;
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
     View view=inflater.inflate(R.layout.fragment_video_list, container, false);
+        ButterKnife.bind(this,view);
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Constants.VIDEO_BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-        recyclerView=view.findViewById(R.id.rec_videos);
-        name=view.findViewById(R.id.tv_videolist1);
-        name2=view.findViewById(R.id.tv_videolist2);
-        thumbnail2=view.findViewById(R.id.img_videolist2);
-        thumbnail=view.findViewById(R.id.img_videolist1);
-
-
         ApiService apiService = retrofit.create(ApiService.class);
         call=apiService.getVideoResponse();
         call.enqueue(new Callback<VideoResponse>() {

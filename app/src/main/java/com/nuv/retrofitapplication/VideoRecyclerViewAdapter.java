@@ -24,19 +24,20 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class VideoRecyclerViewAdapter extends RecyclerView.Adapter<VideoRecyclerViewAdapter.MyViewHolder> {
     private final ArrayList<VideoDetails> results;
 
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
-        ImageView image;
-        TextView title;
-        RelativeLayout relativeLayout;
+        @BindView(R.id.img_videos) ImageView image;
+        @BindView(R.id.tv_videname) TextView title;
+        @BindView(R.id.rl_videos) RelativeLayout relativeLayout;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            image=itemView.findViewById(R.id.img_videos);
-            title=itemView.findViewById(R.id.tv_videname);
-            relativeLayout=itemView.findViewById(R.id.rl_videos);
+            ButterKnife.bind(this,itemView);
         }
     }
 

@@ -18,6 +18,8 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -29,8 +31,8 @@ public class DefaultColorFragment extends Fragment implements ColorRecyclerViewA
     Call<ArrayList<ColorApiResponse>> call;
 
     ArrayList<String> colors= new ArrayList<>();
-    RecyclerView rvColors;
-    Button next;
+    @BindView(R.id.rv_colors) RecyclerView rvColors;
+    @BindView(R.id.btn_next) Button next;
     ColorRecyclerViewAdapter colorRecyclerViewAdapter;
 
     @Override
@@ -52,16 +54,12 @@ public class DefaultColorFragment extends Fragment implements ColorRecyclerViewA
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_default_color, container, false);
+        ButterKnife.bind(this,view);
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Constants.COLOR_BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         ApiService apiService = retrofit.create(ApiService.class);
-
-         rvColors=view.findViewById(R.id.rv_colors);
-         next=view.findViewById(R.id.btn_next);
-
-       //checkButton();
 
         call=apiService.getColorResponse();
         call.enqueue(new Callback<ArrayList<ColorApiResponse>>() {

@@ -27,11 +27,15 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Objects;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class SearchMovieActivity extends AppCompatActivity {
- Toolbar toolbar;
-    EditText searchQuery;
-    ImageButton search;
-    RecyclerView recyclerView;
+    @BindView(R.id.tb_main) Toolbar toolbar;
+    @BindView(R.id.et_search) EditText searchQuery;
+    @BindView(R.id.btn_search) ImageButton search;
+    @BindView(R.id.search_recyclerview) RecyclerView recyclerView;
     RecyclerViewAdapter recyclerViewAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,16 +55,13 @@ public class SearchMovieActivity extends AppCompatActivity {
                 }
             }}
         setContentView(R.layout.activity_search_movie2);
-        toolbar = findViewById(R.id.tb_main);
+        ButterKnife.bind(this);
         setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(R.drawable.back);
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
         toolbar.setTitle(R.string.SearchMovies);
 
         toolbar.setNavigationOnClickListener(v -> finish());
-        searchQuery = findViewById(R.id.et_search);
-        search = findViewById(R.id.btn_search);
-        recyclerView = findViewById(R.id.search_recyclerview);
         if (isConnected()) {
 
             Gson gson = new Gson();

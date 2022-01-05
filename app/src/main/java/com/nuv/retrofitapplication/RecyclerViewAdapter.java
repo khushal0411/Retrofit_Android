@@ -16,23 +16,24 @@ import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder>{
     private final ArrayList<MovieDetails> results;
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
-        RelativeLayout relativeLayout;
-        TextView name,rating,date;
-        ImageView moviePoster;
+        @BindView(R.id.rl_list) RelativeLayout relativeLayout;
+        @BindView(R.id.tv_name) TextView name;
+        @BindView(R.id.tv_movierating) TextView rating;
+        @BindView(R.id.tv_movie_date) TextView date;
+        @BindView(R.id.img_movie) ImageView moviePoster;
 
 
         public MyViewHolder(@NonNull  View itemView) {
             super(itemView);
-         relativeLayout=itemView.findViewById(R.id.rl_list);
-         name=itemView.findViewById(R.id.tv_name);
-         rating=itemView.findViewById(R.id.tv_movierating);
-         moviePoster=itemView.findViewById(R.id.img_movie);
-         date=itemView.findViewById(R.id.tv_movie_date);
+            ButterKnife.bind(this,itemView);
         }
     }
 

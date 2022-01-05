@@ -30,6 +30,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -40,16 +42,19 @@ import com.google.gson.Gson;
 public class MainActivity extends BaseActivity {
 
     Call<MoviesResponse> call,call2;
-    RecyclerView rvPopularMovies,rvTopRated;
+    @BindView(R.id.rec_popularmovies) RecyclerView rvPopularMovies;
+    @BindView(R.id.rec_toprated) RecyclerView rvTopRated;
+    @BindView(R.id.tb_main) Toolbar toolbar;
+    @BindView(R.id.tv_seemore) TextView seeMore;
+    @BindView(R.id.tv_seemore2) TextView seeMore2;
     private ArrayList<MovieDetails> popularMovies=new ArrayList<>();
     private ArrayList<MovieDetails> topRated=new ArrayList<>();
     RecyclerViewAdapter recyclerViewAdapter;
-    Toolbar toolbar;
-    TextView seeMore,seeMore2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         SharedPreferences sharedPreferences = getSharedPreferences(Constants.MOVIES, MODE_PRIVATE);
         String Theme = sharedPreferences.getString(Constants.THEME, null);
         checkLang();
@@ -68,17 +73,7 @@ public class MainActivity extends BaseActivity {
         }
         }
         setContentView(R.layout.activity_main);
-
-        seeMore =findViewById(R.id.tv_seemore);
-        seeMore2=findViewById(R.id.tv_seemore2);
-
-
-        rvPopularMovies=findViewById(R.id.rec_popularmovies);
-        rvTopRated=findViewById(R.id.rec_toprated);
-        toolbar=findViewById(R.id.tb_main);
-
-
-
+        ButterKnife.bind(this);
         setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(R.drawable.back);
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);

@@ -18,6 +18,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class ColorRecyclerViewAdapter extends RecyclerView.Adapter<ColorRecyclerViewAdapter.MyViewHolder> {
     private final ArrayList<String> color;
 
@@ -32,14 +35,13 @@ public class ColorRecyclerViewAdapter extends RecyclerView.Adapter<ColorRecycler
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
-        CardView colorsCard,bgColorCard;
-        Button next;
+        @BindView(R.id.cv_colors) CardView colorsCard;
+        @BindView(R.id.cv_bgcolor) CardView bgColorCard;
         OnColorSelect colorSelect;
         public MyViewHolder(@NonNull View itemView,OnColorSelect colorSelect) {
             super(itemView);
             this.colorSelect=colorSelect;
-            colorsCard=itemView.findViewById(R.id.cv_colors);
-            bgColorCard=itemView.findViewById(R.id.cv_bgcolor);
+            ButterKnife.bind(this,itemView);
         }
     }
 

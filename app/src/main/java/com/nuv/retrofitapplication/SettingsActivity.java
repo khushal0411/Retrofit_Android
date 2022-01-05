@@ -15,9 +15,17 @@ import android.widget.Button;
 import java.util.Locale;
 import java.util.Objects;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class SettingsActivity extends AppCompatActivity {
-Toolbar toolbar;
-Button langHi, LangEn, langGuj, darkTheme, lightTheme,christmasTheme;
+@BindView(R.id.tb_main) Toolbar toolbar;
+@BindView(R.id.btn_lanhindi) Button langHi;
+@BindView(R.id.btn_LanEng)Button LangEn;
+@BindView(R.id.btn_langujarti)Button langGuj;
+@BindView(R.id.btn_darkmode)Button darkTheme;
+@BindView(R.id.btn_lightmode)Button lightTheme;
+@BindView(R.id.btn_christmasmode)Button christmasTheme;
 String lang;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,13 +46,7 @@ String lang;
                 }
             }}
         setContentView(R.layout.activity_settings);
-        toolbar=findViewById(R.id.tb_main);
-         langHi =findViewById(R.id.btn_lanhindi);
-         LangEn =findViewById(R.id.btn_LanEng);
-         christmasTheme=findViewById(R.id.btn_christmasmode);
-         langGuj =findViewById(R.id.btn_langujarti);
-         darkTheme =findViewById(R.id.btn_darkmode);
-         lightTheme =findViewById(R.id.btn_lightmode);
+        ButterKnife.bind(this);
         setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(R.drawable.back);
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);

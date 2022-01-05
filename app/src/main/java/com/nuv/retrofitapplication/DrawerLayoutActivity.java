@@ -14,8 +14,13 @@ import com.google.android.material.navigation.NavigationView;
 
 import java.util.Objects;
 
-public class DrawerLayoutActivity extends AppCompatActivity {
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
+public class DrawerLayoutActivity extends AppCompatActivity {
+@BindView(R.id.tb_main) Toolbar toolbar;
+@BindView(R.id.drawer_layout) DrawerLayout drawerLayout;
+@BindView(R.id.navigation) NavigationView navView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,13 +29,10 @@ public class DrawerLayoutActivity extends AppCompatActivity {
         FragmentTransaction transactions = getSupportFragmentManager().beginTransaction();
         transactions.replace(R.id.frame, homeFragment);
         transactions.commit();
-
-        Toolbar toolbar= findViewById(R.id.tb_main);
+        ButterKnife.bind(this);
         toolbar.setTitle(R.string.Home_Screen);
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
-        DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        NavigationView navView= findViewById(R.id.navigation);
         ActionBarDrawerToggle drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.drawer_open,  R.string.drawer_close);
         drawerToggle.setDrawerIndicatorEnabled(true);
         drawerToggle.syncState();
