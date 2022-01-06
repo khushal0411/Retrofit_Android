@@ -1,9 +1,13 @@
 package com.nuv.retrofitapplication;
 
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class VideoDetails {
+import java.io.Serializable;
+
+public class VideoDetails  {
     @SerializedName("title")
     @Expose
     private String title;

@@ -3,6 +3,7 @@ package com.nuv.retrofitapplication;
 import android.graphics.Bitmap;
 import android.graphics.BlurMaskFilter;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,6 +58,8 @@ public class VideoRecyclerViewAdapter extends RecyclerView.Adapter<VideoRecycler
             Bundle bundle = new Bundle();
             bundle.putString(Constants.VIDEO_URL,videoDetails.getVideoUrl());
             bundle.putString(Constants.VIDEO_NAME,videoDetails.getTitle());
+            bundle.putSerializable(Constants.VIDEO_LIST,results);
+            bundle.putInt(Constants.INDEX_VIDEO,position);
             VideoPlayerFragment myFrag= new VideoPlayerFragment();
             myFrag.setArguments(bundle);
             AppCompatActivity activity = (AppCompatActivity) v.getContext();

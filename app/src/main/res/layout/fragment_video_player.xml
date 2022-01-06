@@ -4,8 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".VideoPlayerFragment">
-
+    tools:context=".VideoPlayerFragment"
+    android:id="@+id/fl_swipe"
+    >
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/ll_swipeLayout">
     <TextView
         android:layout_marginTop="0dp"
         android:layout_marginStart="20dp"
@@ -18,6 +24,9 @@
         />
 
     <com.google.android.exoplayer2.ui.PlayerView
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+        android:paddingBottom="10dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/exo_videoplayer"
@@ -26,5 +35,5 @@
         android:layout_marginTop="40dp">
 
     </com.google.android.exoplayer2.ui.PlayerView>
-
+</LinearLayout>
 </FrameLayout>
