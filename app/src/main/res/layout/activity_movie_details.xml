@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <variable
+            name="movieDetails"
+            type="com.nuv.retrofitapplication.model.MovieDetails" />
+    </data>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -7,7 +13,7 @@
     tools:context=".MovieDetailsActivity">
 
     <ImageView
-        android:id="@+id/img_backgroungimage"
+        android:id="@+id/img_backgroung_image"
         android:layout_width="wrap_content"
         android:layout_marginStart="0dp"
         android:layout_marginTop="30dp"
@@ -17,7 +23,7 @@
         app:srcCompat="@drawable/aa"
         tools:ignore="ContentDescription" />
     <ImageView
-        android:id="@+id/img_movieposter"
+        android:id="@+id/img_movie_poster"
         android:layout_width="100dp"
         android:layout_height="140dp"
         android:layout_marginTop="190dp"
@@ -28,12 +34,12 @@
 
 
     <TextView
-        android:id="@+id/tv_movienamepage"
+        android:id="@+id/tv_movie_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="160dp"
         android:layout_marginTop="260dp"
-        android:text="movie"
+        android:text="@{movieDetails.originalTitle}"
         android:textColor="#3B6E75"
         android:textSize="22sp"
         android:textStyle="bold"/>
@@ -44,16 +50,22 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
         android:layout_marginTop="360dp"
-        android:text="language"
+        android:text="@{movieDetails.originalLanguage}"
         android:textColor="#396308"/>
-
     <TextView
-        android:id="@+id/tv_ratings"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
         android:layout_marginTop="400dp"
-        android:text="ratings"
+        android:text="Ratings:"
+        android:textColor="#ED1111"/>
+    <TextView
+        android:id="@+id/tv_ratings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="85dp"
+        android:layout_marginTop="400dp"
+        android:text="@{String.valueOf(movieDetails.voteAverage)}"
         android:textColor="#ED1111">
 
     </TextView>
@@ -88,14 +100,15 @@
     </TextView>
 
     <TextView
-        android:id="@+id/tv_movieoverview"
+        android:id="@+id/tv_movie_overview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
         android:layout_marginTop="474dp"
         android:fontFamily="sans-serif-condensed"
-        android:text="Overview"
+        android:text="@{movieDetails.overview}"
         android:textSize="16sp"
         android:textColor="#3B6E75"/>
 
 </RelativeLayout>
+</layout>

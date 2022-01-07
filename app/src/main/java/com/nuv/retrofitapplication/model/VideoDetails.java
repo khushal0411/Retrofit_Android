@@ -1,4 +1,4 @@
-package com.nuv.retrofitapplication;
+package com.nuv.retrofitapplication.model;
 
 import android.os.Parcelable;
 

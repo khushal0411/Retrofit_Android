@@ -2,8 +2,9 @@ package com.nuv.retrofitapplication;
 
 import android.os.Bundle;
 
-import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -13,13 +14,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.Toast;
+
+import com.nuv.retrofitapplication.adapters.ColorRecyclerViewAdapter;
+import com.nuv.retrofitapplication.constant.Constants;
+import com.nuv.retrofitapplication.databinding.FragmentChooseColorBinding;
+import com.nuv.retrofitapplication.model.ColorApiResponse;
+import com.nuv.retrofitapplication.network.ApiService;
 
 import java.util.ArrayList;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -27,42 +31,38 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 
-public class DefaultColorFragment extends Fragment implements ColorRecyclerViewAdapter.OnColorSelect {
-    Call<ArrayList<ColorApiResponse>> call;
+public class ChooseColorFragment extends Fragment implements ColorRecyclerViewAdapter.OnColorSelect {
+    Call<ArrayList<ColorApiResponse>> colorResponseCall;
 
     ArrayList<String> colors= new ArrayList<>();
-    @BindView(R.id.rv_colors) RecyclerView rvColors;
-    @BindView(R.id.btn_next) Button next;
     ColorRecyclerViewAdapter colorRecyclerViewAdapter;
+    FragmentChooseColorBinding binding;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
-            @Override
-            public void handleOnBackPressed() {
-               HomeFragment homeFragment = new HomeFragment();
-                FragmentTransaction transactions = getParentFragmentManager().beginTransaction();
-                transactions.replace(R.id.frame, homeFragment);
-                transactions.commit();
-            }
-        };requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
+
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_default_color, container, false);
-        ButterKnife.bind(this,view);
+        binding = DataBindingUtil.inflate(inflater,R.layout.fragment_choose_color,container,false);
+        return binding.getRoot();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable  Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Constants.COLOR_BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         ApiService apiService = retrofit.create(ApiService.class);
 
-        call=apiService.getColorResponse();
-        call.enqueue(new Callback<ArrayList<ColorApiResponse>>() {
+        colorResponseCall =apiService.getColorResponse();
+        colorResponseCall.enqueue(new Callback<ArrayList<ColorApiResponse>>() {
             @Override
             public void onResponse(@NonNull Call<ArrayList<ColorApiResponse>> call, @NonNull Response<ArrayList<ColorApiResponse>> response) {
                 assert response.body() != null;
@@ -70,14 +70,13 @@ public class DefaultColorFragment extends Fragment implements ColorRecyclerViewA
                 {
                     for(int j=0;j<=4;j++)
                     {
-
                         colors.add(response.body().get(i).getValues().get(j).getColor());
                     }
                 }
-                colorRecyclerViewAdapter = new ColorRecyclerViewAdapter(colors,DefaultColorFragment.this::colorSelected);
+                colorRecyclerViewAdapter = new ColorRecyclerViewAdapter(colors, ChooseColorFragment.this::colorSelected);
                 RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(view.getContext(),3);
-                rvColors.setLayoutManager(mLayoutManager);
-                rvColors.setAdapter(colorRecyclerViewAdapter);
+                binding.rvColors.setLayoutManager(mLayoutManager);
+                binding.rvColors.setAdapter(colorRecyclerViewAdapter);
                 colorRecyclerViewAdapter.notifyDataSetChanged();
             }
 
@@ -87,35 +86,31 @@ public class DefaultColorFragment extends Fragment implements ColorRecyclerViewA
             }
         });
 
-        return view;
     }
 
     private void checkButton() {
-        next.setEnabled(true);
+        binding.btnNext.setEnabled(true);
     }
 
     @Override
     public void colorSelected(ArrayList<String> selectedIndex) {
         if(selectedIndex.size()==3){
          checkButton();
-         next.setOnClickListener(new View.OnClickListener() {
-             @Override
-             public void onClick(View v) {
-
-                 Bundle bundle = new Bundle();
-                  bundle.putStringArrayList(Constants.COLOR_SELECTED_INDEX,selectedIndex);
-                  bundle.putStringArrayList(Constants.COLOR_ARRAYLIST,colors);
-                 ColorChangeFragment homepage = new ColorChangeFragment();
-                 homepage.setArguments(bundle);
-                 FragmentManager fragmentManager = getFragmentManager();
-                 FragmentTransaction transaction =fragmentManager.beginTransaction();
-                 transaction.replace(R.id.frame, homepage);
-                 transaction.commit();
-             }
+         binding.btnNext.setOnClickListener(v -> {
+             Bundle bundle = new Bundle();
+             bundle.putStringArrayList(Constants.COLOR_SELECTED_INDEX,selectedIndex);
+             bundle.putStringArrayList(Constants.COLOR_ARRAYLIST,colors);
+             ColorChangeFragment homepage = new ColorChangeFragment();
+             homepage.setArguments(bundle);
+             FragmentManager fragmentManager = getFragmentManager();
+             assert fragmentManager != null;
+             FragmentTransaction transaction =fragmentManager.beginTransaction();
+             transaction.replace(R.id.fl_home_screen, homepage).addToBackStack(null);
+             transaction.commit();
          });
     }
     else {
-        next.setEnabled(false);
+        binding.btnNext.setEnabled(false);
         }
     }
 

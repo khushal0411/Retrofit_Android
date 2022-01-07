@@ -1,4 +1,8 @@
-package com.nuv.retrofitapplication;
+package com.nuv.retrofitapplication.network;
+import com.nuv.retrofitapplication.model.ColorApiResponse;
+import com.nuv.retrofitapplication.model.MoviesResponse;
+import com.nuv.retrofitapplication.model.VideoResponse;
+
 import java.util.ArrayList;
 
 import retrofit2.Call;

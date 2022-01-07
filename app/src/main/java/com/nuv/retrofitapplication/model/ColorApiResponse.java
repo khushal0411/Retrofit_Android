@@ -1,11 +1,11 @@
-package com.nuv.retrofitapplication;
+package com.nuv.retrofitapplication.model;
 
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.nuv.retrofitapplication.model.ColorValue;
 
 public class ColorApiResponse {
 

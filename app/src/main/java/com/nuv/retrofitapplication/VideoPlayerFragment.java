@@ -1,10 +1,13 @@
 package com.nuv.retrofitapplication;
 
 
+import android.app.ActionBar;
 import android.os.Bundle;
 
 import androidx.activity.OnBackPressedCallback;
-import androidx.constraintlayout.motion.widget.OnSwipe;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -21,6 +24,9 @@ import com.google.android.exoplayer2.ExoPlayer;
 import com.google.android.exoplayer2.MediaItem;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.ui.PlayerView;
+import com.nuv.retrofitapplication.constant.Constants;
+import com.nuv.retrofitapplication.databinding.FragmentVideoPlayerBinding;
+import com.nuv.retrofitapplication.model.VideoDetails;
 
 import java.util.ArrayList;
 
@@ -29,46 +35,43 @@ import butterknife.ButterKnife;
 
 
 public class VideoPlayerFragment extends Fragment {
-@BindView(R.id.tv_display) TextView display;
-@BindView(R.id.exo_videoplayer) PlayerView playerView;
-@BindView(R.id.ll_swipeLayout) LinearLayout linearLayout;
-@BindView(R.id.fl_swipe) FrameLayout frameLayout;
+
 SimpleExoPlayer simpleExoPlayer;
 float x1,y1,x2,y2;
 int index=0;
 ArrayList<VideoDetails> videoDetails;
+FragmentVideoPlayerBinding binding;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
-            @Override
-            public void handleOnBackPressed() {
-                VideoListFragment videoListFragment= new VideoListFragment();
-                FragmentTransaction transactions = getParentFragmentManager().beginTransaction();
-                transactions.replace(R.id.frame, videoListFragment);
-                transactions.commit();
-            }
-        };requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
+
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view=inflater.inflate(R.layout.fragment_video_player, container, false);
-       ButterKnife.bind(this,view);
+        binding = DataBindingUtil.inflate(inflater,R.layout.fragment_video_player,container,false);
+        return binding.getRoot();
+
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable  Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         simpleExoPlayer= (SimpleExoPlayer) new ExoPlayer.Builder(view.getContext()).build();
         assert getArguments() != null;
         String videoUrl= getArguments().getString(Constants.VIDEO_URL);
         String videoName= getArguments().getString(Constants.VIDEO_NAME);
+        index= getArguments().getInt(Constants.VIDEO_INDEX);
         videoDetails= (ArrayList<VideoDetails>) getArguments().getSerializable(Constants.VIDEO_LIST);
-        display.setText(videoName);
-        index= getArguments().getInt(Constants.INDEX_VIDEO);
-        playerView.setPlayer(simpleExoPlayer);
+        binding.tvDisplay.setText(videoDetails.get(index).getTitle());
+        binding.exoVideoPlayer.setPlayer(simpleExoPlayer);
         MediaItem mediaItem = MediaItem.fromUri(videoUrl);
         simpleExoPlayer.addMediaItem(mediaItem);
         simpleExoPlayer.prepare();
         simpleExoPlayer.play();
-        playerView.setOnTouchListener(new View.OnTouchListener() {
+        binding.exoVideoPlayer.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent touchEvent) {
                 switch(touchEvent.getAction()){
@@ -94,7 +97,7 @@ ArrayList<VideoDetails> videoDetails;
                                 index=0;
                                 setVideo();
                             }
-                    }else if(x1 > x2){
+                        }else if(x1 > x2){
                             index= index+1;
                             if(index<videoDetails.size())
                             {
@@ -104,17 +107,16 @@ ArrayList<VideoDetails> videoDetails;
                                 index=0;
                                 setVideo();
                             }
-                    }
-                    break;
+                        }
+                        break;
                 }
                 return true;
             }
         });
-        return view;
-
     }
+
     public  void setVideo(){
-        display.setText(videoDetails.get(index).getTitle());
+        binding.tvDisplay.setText(videoDetails.get(index).getTitle());
         simpleExoPlayer.stop();
         simpleExoPlayer.clearMediaItems();
         MediaItem m = MediaItem.fromUri(videoDetails.get(index).getVideoUrl());
@@ -147,12 +149,11 @@ ArrayList<VideoDetails> videoDetails;
     public void onResume() {
         super.onResume();
         String videoUrl= getArguments().getString(Constants.VIDEO_URL);
-        playerView.setPlayer(simpleExoPlayer);
+        binding.exoVideoPlayer.setPlayer(simpleExoPlayer);
         MediaItem mediaItem = MediaItem.fromUri(videoUrl);
         simpleExoPlayer.addMediaItem(mediaItem);
         simpleExoPlayer.prepare();
         simpleExoPlayer.play();
     }
-
 
 }

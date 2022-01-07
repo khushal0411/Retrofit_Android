@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
+<layout>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".MoviesHomeScreenActivity">
     <include
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         layout="@layout/custom_toolbar"/>
@@ -24,9 +26,9 @@
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
                 android:layout_marginTop="40dp"
-                android:layout_marginStart="80dp"
+                android:layout_marginStart="170dp"
                 android:textSize="20sp"
-                android:id="@+id/tv_headingmain"
+                android:id="@+id/tv_heading_main"
                 android:text="@string/movie_recomendation_app">
 
             </TextView>
@@ -47,28 +49,28 @@
             <ImageView
                 android:layout_marginStart="2dp"
                 android:layout_marginTop="50dp"
-                android:layout_width="380dp"
+                android:layout_width="600dp"
                 android:layout_height="170dp"
                 app:srcCompat="@drawable/aa"
                 tools:ignore="ContentDescription" />
                 <ImageView
                     android:layout_marginTop="50dp"
                     android:layout_marginStart="2dp"
-                    android:layout_width="380dp"
+                    android:layout_width="600dp"
                     android:layout_height="170dp"
                     app:srcCompat="@drawable/bb"
                     tools:ignore="ContentDescription" />
                 <ImageView
                     android:layout_marginTop="50dp"
                     android:layout_marginStart="2dp"
-                    android:layout_width="380dp"
+                    android:layout_width="600dp"
                     android:layout_height="170dp"
                     app:srcCompat="@drawable/cc"
                     tools:ignore="ContentDescription" />
                 <ImageView
                     android:layout_marginTop="50dp"
                     android:layout_marginStart="2dp"
-                    android:layout_width="380dp"
+                    android:layout_width="600dp"
                     android:layout_height="170dp"
                     app:srcCompat="@drawable/dd"
                     tools:ignore="ContentDescription" />
@@ -83,23 +85,24 @@
     android:layout_height="wrap_content"
     android:text="@string/popular_movies"
     android:layout_marginStart="10dp"
-    android:id="@+id/tv_popularmheading"
+    android:id="@+id/tv_popular_mheading"
     android:layout_marginTop="320dp"
     android:textSize="20sp"
     android:textStyle="bold"
     android:fontFamily="sans-serif"
-    android:textColor="?android:colorPrimary"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/tv_seemore"
-        android:layout_marginTop="320dp"
-        android:layout_marginStart="310dp"
-        android:text="@string/see_more"
-        android:textStyle="bold"/>
+    android:textColor="@color/purple_200"/>
 
 
-    <LinearLayout
+        <TextView
+            android:id="@+id/tv_seemore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="510dp"
+            android:layout_marginTop="320dp"
+            android:text="@string/see_more"
+            android:textStyle="bold" />
+
+        <LinearLayout
         android:layout_marginTop="350dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -109,7 +112,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:id="@+id/rec_popularmovies">
+            android:id="@+id/rec_popular_movies">
 
         </androidx.recyclerview.widget.RecyclerView>
 
@@ -123,15 +126,15 @@
             android:layout_marginTop="620dp"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:id="@+id/tv_topratedmheading"
+            android:id="@+id/tv_toprated_mheading"
             android:fontFamily="sans-serif"
-            android:textColor="?android:colorPrimary"/>
+            android:textColor="@color/purple_200"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/tv_seemore2"
             android:layout_marginTop="620dp"
-            android:layout_marginStart="310dp"
+            android:layout_marginStart="510dp"
             android:text="@string/see_more"
             android:textStyle="bold"/>
 
@@ -145,7 +148,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:id="@+id/rec_toprated">
+        android:id="@+id/rec_top_rated">
 
     </androidx.recyclerview.widget.RecyclerView>
 
@@ -156,3 +159,4 @@
 
 </ScrollView>
 </LinearLayout>
+</layout>

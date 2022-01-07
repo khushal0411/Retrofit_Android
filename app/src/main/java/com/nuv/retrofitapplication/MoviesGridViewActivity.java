@@ -2,15 +2,14 @@ package com.nuv.retrofitapplication;
 
 import androidx.annotation.NonNull;
 
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
+import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -20,6 +19,13 @@ import android.view.MenuItem;
 
 import android.widget.Toast;
 
+
+import com.nuv.retrofitapplication.adapters.MoviesRecyclerViewAdapter;
+import com.nuv.retrofitapplication.constant.Constants;
+import com.nuv.retrofitapplication.databinding.ActivityMoviesGridBinding;
+import com.nuv.retrofitapplication.model.MovieDetails;
+import com.nuv.retrofitapplication.model.MoviesResponse;
+import com.nuv.retrofitapplication.network.ApiService;
 
 import java.util.ArrayList;
 
@@ -33,52 +39,39 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class MoviesGridViewActivity extends BaseActivity {
-    @BindView(R.id.rv_recactivity) RecyclerView recyclerView;
-    RecyclerViewAdapter recyclerViewAdapter;
+public class MoviesGridViewActivity extends BaseActivity implements MoviesRecyclerViewAdapter.onSelect {
+
+    MoviesRecyclerViewAdapter moviesRecyclerViewAdapter;
     Call<MoviesResponse> call2;
-    @BindView(R.id.swl_listdata) SwipeRefreshLayout swipeRefreshLayout;
     ArrayList<MovieDetails> results;
-    @BindView(R.id.tb_main) Toolbar toolbar;
+
+    ActivityMoviesGridBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        SharedPreferences sharedPreferences = getSharedPreferences(Constants.MOVIES, MODE_PRIVATE);
-        String Theme = sharedPreferences.getString(Constants.THEME, null);
-        if(Theme !=null){
-            if(Theme.equals(Constants.CHRISTMAS)){
-                setTheme(R.style.ChristmasTheme);
-            }else {
-                if(Theme.equals(Constants.DARK_MODE))
-                {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                }
-                else{
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                }
-            }}
-        setContentView(R.layout.activity_popular_movies);
+        themeCheck();
+        binding= DataBindingUtil.setContentView(this,R.layout.activity_movies_grid);
         ButterKnife.bind(this);
         Intent intent= getIntent();
-        String type= intent.getStringExtra(Constants.TYPE);
-        setSupportActionBar(toolbar);
-        toolbar.setNavigationIcon(R.drawable.back);
+        String type= intent.getStringExtra(Constants.MOVIE_TYPE);
+        setSupportActionBar(binding.toolbar.tbMain);
+        binding.toolbar.tbMain.setNavigationIcon(R.drawable.back);
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
         if(type.equals(Constants.POPULAR)){
-            toolbar.setTitle(R.string.PopularMovies);
+            binding.toolbar.tbMain.setTitle(R.string.PopularMovies);
         }
         else {
-            toolbar.setTitle(R.string.Topratedmovies);
+            binding.toolbar.tbMain.setTitle(R.string.Topratedmovies);
         }
 
 
-        toolbar.setNavigationOnClickListener(v -> finish());
+        binding.toolbar.tbMain.setNavigationOnClickListener(v -> finish());
 
 loadData();
 
-        swipeRefreshLayout.setOnRefreshListener(() -> {
-            swipeRefreshLayout.setRefreshing(false);
+        binding.swlListData.setOnRefreshListener(() -> {
+           binding.swlListData.setRefreshing(false);
         loadData();
 
         });
@@ -91,13 +84,13 @@ loadData();
     private void loadData(){
         if(isConnected()) {
             Intent intent= getIntent();
-            String type= intent.getStringExtra(Constants.TYPE);
+            String type= intent.getStringExtra(Constants.MOVIE_TYPE);
             if(type.equals(Constants.POPULAR)){
-                toolbar.setTitle(R.string.popular_movies);
+                binding.toolbar.tbMain.setTitle(R.string.popular_movies);
                 load();
             }
             else {
-                toolbar.setTitle(R.string.top_rated_movies);
+                binding.toolbar.tbMain.setTitle(R.string.top_rated_movies);
                 loadTopRated();
             }
 
@@ -118,7 +111,7 @@ loadData();
 
     private void load() {
 
-        ApiService apiService =apicall();
+        ApiService apiService = apiCall();
 
         call2 = apiService.getposts();
 
@@ -129,12 +122,12 @@ loadData();
                 assert moviesResponse != null;
                  results = (ArrayList<MovieDetails>) moviesResponse.getResults();
 
-                recyclerViewAdapter= new RecyclerViewAdapter(results);
-                recyclerViewAdapter.notifyDataSetChanged();
+                moviesRecyclerViewAdapter = new MoviesRecyclerViewAdapter(results,MoviesGridViewActivity.this::onButtonClick);
+                moviesRecyclerViewAdapter.notifyDataSetChanged();
 
                 RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getApplication(),3);
-                recyclerView.setLayoutManager(mLayoutManager);
-                recyclerView.setAdapter(recyclerViewAdapter);
+                binding.rvMoviesGrid.setLayoutManager(mLayoutManager);
+                binding.rvMoviesGrid.setAdapter(moviesRecyclerViewAdapter);
             }
 
             @Override
@@ -147,7 +140,7 @@ loadData();
 
     }
     private void loadTopRated() {
-        ApiService apiService =apicall();
+        ApiService apiService = apiCall();
         call2 = apiService.getresponse();
 
         call2.enqueue(new Callback<MoviesResponse>() {
@@ -157,12 +150,12 @@ loadData();
                 assert moviesResponse != null;
                 ArrayList<MovieDetails> results = (ArrayList<MovieDetails>) moviesResponse.getResults();
 
-                recyclerViewAdapter= new RecyclerViewAdapter(results);
-                recyclerViewAdapter.notifyDataSetChanged();
+                moviesRecyclerViewAdapter = new MoviesRecyclerViewAdapter(results,MoviesGridViewActivity.this::onButtonClick);
+                moviesRecyclerViewAdapter.notifyDataSetChanged();
 
                 RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getApplication(),3);
-                recyclerView.setLayoutManager(mLayoutManager);
-                recyclerView.setAdapter(recyclerViewAdapter);
+                binding.rvMoviesGrid.setLayoutManager(mLayoutManager);
+                binding.rvMoviesGrid.setAdapter(moviesRecyclerViewAdapter);
             }
 
             @Override
@@ -189,4 +182,8 @@ loadData();
 
     }
 
+    @Override
+    public void onButtonClick(Intent intent) {
+        startActivity(intent);
+    }
 }

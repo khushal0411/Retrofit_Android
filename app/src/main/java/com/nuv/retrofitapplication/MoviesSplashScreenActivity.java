@@ -1,34 +1,30 @@
 package com.nuv.retrofitapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.ImageView;
-import android.widget.TextView;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
+import com.nuv.retrofitapplication.databinding.ActivitySplashScreenBinding;
 
-public class SplashScreenActivity extends AppCompatActivity {
-@BindView(R.id.img_applogo) ImageView logo;
-@BindView(R.id.tv_splashscreentitle) TextView title;
+public class MoviesSplashScreenActivity extends AppCompatActivity {
+
 Animation titleAnimation,logoAnimation;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_splash_screen);
-        ButterKnife.bind(this);
+        ActivitySplashScreenBinding binding = DataBindingUtil.setContentView(this,R.layout.activity_splash_screen);
         titleAnimation = AnimationUtils.loadAnimation(this,R.anim.translate);
-        title.setAnimation(titleAnimation);
+        binding.tvSplashScreenTitle.setAnimation(titleAnimation);
         logoAnimation =AnimationUtils.loadAnimation(this,R.anim.logorotate);
-        logo.setAnimation(logoAnimation);
+        binding.imgAppLogo.setAnimation(logoAnimation);
 
         new Handler().postDelayed(() -> {
-            Intent intent = new Intent(SplashScreenActivity.this, MainActivity.class);
+            Intent intent = new Intent(MoviesSplashScreenActivity.this, MoviesHomeScreenActivity.class);
             startActivity(intent);
             finish();
         },3000);

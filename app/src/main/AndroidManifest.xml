@@ -13,7 +13,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".DrawerLayoutActivity">
+        <activity android:name=".HomeScreenActivity"
+            android:exported="true"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -21,7 +23,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".SplashScreenActivity"
+            android:name=".MoviesSplashScreenActivity"
             android:screenOrientation="portrait">
 
         </activity>
@@ -38,7 +40,7 @@
             android:name=".MoviesGridViewActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".MainActivity"
+            android:name=".MoviesHomeScreenActivity"
             android:screenOrientation="portrait"></activity>
     </application>
 

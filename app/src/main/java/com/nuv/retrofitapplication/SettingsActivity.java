@@ -1,8 +1,8 @@
 package com.nuv.retrofitapplication;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
+import androidx.databinding.DataBindingUtil;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -12,55 +12,42 @@ import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.widget.Button;
 
+import com.nuv.retrofitapplication.constant.Constants;
+import com.nuv.retrofitapplication.databinding.ActivitySettingsBinding;
+
 import java.util.Locale;
 import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class SettingsActivity extends AppCompatActivity {
-@BindView(R.id.tb_main) Toolbar toolbar;
-@BindView(R.id.btn_lanhindi) Button langHi;
-@BindView(R.id.btn_LanEng)Button LangEn;
-@BindView(R.id.btn_langujarti)Button langGuj;
-@BindView(R.id.btn_darkmode)Button darkTheme;
-@BindView(R.id.btn_lightmode)Button lightTheme;
-@BindView(R.id.btn_christmasmode)Button christmasTheme;
+public class SettingsActivity extends BaseActivity {
+
 String lang;
+ActivitySettingsBinding binding;
+SharedPreferences sharedPreferences;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        SharedPreferences sharedPreferences = getSharedPreferences(Constants.MOVIES, MODE_PRIVATE);
-        String Theme = sharedPreferences.getString(Constants.THEME, null);
-        if(Theme !=null){
-            if(Theme.equals(Constants.CHRISTMAS)){
-                setTheme(R.style.ChristmasTheme);
-            }
-            else {
-                if(Theme.equals(Constants.DARK_MODE))
-                {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                }
-                else{
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                }
-            }}
-        setContentView(R.layout.activity_settings);
+        sharedPreferences = getSharedPreferences(Constants.MY_PREF, MODE_PRIVATE);
+        themeCheck();
+        //setContentView(R.layout.activity_settings);
+         binding= DataBindingUtil.setContentView(this,R.layout.activity_settings);
         ButterKnife.bind(this);
-        setSupportActionBar(toolbar);
-        toolbar.setNavigationIcon(R.drawable.back);
+        setSupportActionBar(binding.toolbar.tbMain);
+        binding.toolbar.tbMain.setNavigationIcon(R.drawable.back);
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
-        toolbar.setTitle(R.string.SettingsPage);
+        binding.toolbar.tbMain.setTitle(R.string.SettingsPage);
 
 
-        christmasTheme.setOnClickListener(v -> {
+        binding.btnChristmasMode.setOnClickListener(v -> {
             setTheme(R.style.ChristmasTheme);
             SharedPreferences.Editor editor =sharedPreferences.edit();
             editor.putString(Constants.THEME,Constants.CHRISTMAS);
             editor.apply();
             resetApplication();
         });
-         darkTheme.setOnClickListener(v -> {
+         binding.btnDarkMode.setOnClickListener(v -> {
              SharedPreferences.Editor editor =sharedPreferences.edit();
              editor.putString(Constants.THEME,Constants.DARK_MODE);
              editor.apply();
@@ -68,7 +55,7 @@ String lang;
 
          });
 
-         lightTheme.setOnClickListener(v -> {
+         binding.btnLightMode.setOnClickListener(v -> {
              AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
              SharedPreferences.Editor editor =sharedPreferences.edit();
              editor.putString(Constants.THEME,Constants.LIGHT_MODE);
@@ -79,22 +66,22 @@ String lang;
          });
 
 
-         LangEn.setOnClickListener(v -> {
+         binding.btnLanEng.setOnClickListener(v -> {
              lang="en";
              changeLanguage(lang);
          });
-         langHi.setOnClickListener(v -> {
+         binding.btnLanHindi.setOnClickListener(v -> {
              lang="hi";
              changeLanguage(lang);
 
          });
 
-         langGuj.setOnClickListener(v -> {
+         binding.btnLanGujarti.setOnClickListener(v -> {
              lang="gu";
              changeLanguage(lang);
          });
 
-        toolbar.setNavigationOnClickListener(v -> finish());
+        binding.toolbar.tbMain.setNavigationOnClickListener(v -> finish());
     }
 
     private void changeLanguage(String lang) {
@@ -104,7 +91,7 @@ String lang;
         Configuration conf = res.getConfiguration();
         conf.locale = locale;
         res.updateConfiguration(conf, dm);
-        SharedPreferences sharedPreferences = getSharedPreferences(Constants.MOVIES, MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences(Constants.MY_PREF, MODE_PRIVATE);
         SharedPreferences.Editor editor =sharedPreferences.edit();
         editor.putString(Constants.LANG_PREF,lang);
         editor.apply();

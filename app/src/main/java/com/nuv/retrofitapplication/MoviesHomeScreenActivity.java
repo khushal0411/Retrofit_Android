@@ -2,7 +2,7 @@ package com.nuv.retrofitapplication;
 
 import androidx.annotation.NonNull;
 
-import androidx.appcompat.app.AppCompatDelegate;
+import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -38,68 +38,53 @@ import retrofit2.Response;
 import androidx.appcompat.widget.Toolbar;
 
 import com.google.gson.Gson;
+import com.nuv.retrofitapplication.adapters.MoviesRecyclerViewAdapter;
+import com.nuv.retrofitapplication.constant.Constants;
+import com.nuv.retrofitapplication.databinding.ActivityMoviesHomeBinding;
+import com.nuv.retrofitapplication.model.MovieDetails;
+import com.nuv.retrofitapplication.model.MoviesResponse;
+import com.nuv.retrofitapplication.network.ApiService;
 
-public class MainActivity extends BaseActivity {
+public class MoviesHomeScreenActivity extends BaseActivity implements MoviesRecyclerViewAdapter.onSelect{
 
-    Call<MoviesResponse> call,call2;
-    @BindView(R.id.rec_popularmovies) RecyclerView rvPopularMovies;
-    @BindView(R.id.rec_toprated) RecyclerView rvTopRated;
-    @BindView(R.id.tb_main) Toolbar toolbar;
-    @BindView(R.id.tv_seemore) TextView seeMore;
-    @BindView(R.id.tv_seemore2) TextView seeMore2;
+    Call<MoviesResponse> popularMoviesCall, topRatedMoviesCall;
     private ArrayList<MovieDetails> popularMovies=new ArrayList<>();
     private ArrayList<MovieDetails> topRated=new ArrayList<>();
-    RecyclerViewAdapter recyclerViewAdapter;
+    MoviesRecyclerViewAdapter moviesRecyclerViewAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        SharedPreferences sharedPreferences = getSharedPreferences(Constants.MOVIES, MODE_PRIVATE);
-        String Theme = sharedPreferences.getString(Constants.THEME, null);
-        checkLang();
-        if(Theme !=null){
-        if(Theme.equals(Constants.CHRISTMAS)){
-            setTheme(R.style.ChristmasTheme);
-        }
-        else {
-            if(Theme.equals(Constants.DARK_MODE))
-            {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-            }
-            else{
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-            }
-        }
-        }
-        setContentView(R.layout.activity_main);
+          themeCheck();
+        //setContentView(R.layout.activity_movies_home);
+        ActivityMoviesHomeBinding binding = DataBindingUtil.setContentView(this,R.layout.activity_movies_home);
         ButterKnife.bind(this);
-        setSupportActionBar(toolbar);
-        toolbar.setNavigationIcon(R.drawable.back);
+        setSupportActionBar(binding.toolbar.tbMain);
+        binding.toolbar.tbMain.setNavigationIcon(R.drawable.back);
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
-        toolbar.setTitle(R.string.movie_recomendation_app);
+        binding.toolbar.tbMain.setTitle(R.string.movie_recomendation_app);
 
-         toolbar.setNavigationOnClickListener(v -> {
-             Intent intent = new Intent(MainActivity.this, DrawerLayoutActivity.class);
+        binding.toolbar.tbMain.setNavigationOnClickListener(v -> {
+             Intent intent = new Intent(MoviesHomeScreenActivity.this, HomeScreenActivity.class);
              startActivity(intent);
          });
 
           if(isConnected()) {
-              seeMore.setOnClickListener(v -> {
-                  Intent intent = new Intent(MainActivity.this, MoviesGridViewActivity.class);
-                  intent.putExtra(Constants.TYPE, Constants.POPULAR);
+              binding.tvSeemore.setOnClickListener(v -> {
+                  Intent intent = new Intent(MoviesHomeScreenActivity.this, MoviesGridViewActivity.class);
+                  intent.putExtra(Constants.MOVIE_TYPE, Constants.POPULAR);
                   startActivity(intent);
               });
-               ApiService apiService =apicall();
+               ApiService apiService = apiCall();
 
-              call = apiService.getposts();
-              call.enqueue(new Callback<MoviesResponse>() {
+              popularMoviesCall = apiService.getposts();
+              popularMoviesCall.enqueue(new Callback<MoviesResponse>() {
                   @Override
                   public void onResponse(@NonNull Call<MoviesResponse> call, @NonNull Response<MoviesResponse> response) {
                       MoviesResponse moviesResponse = response.body();
                       assert moviesResponse != null;
                       popularMovies = (ArrayList<MovieDetails>) moviesResponse.getResults();
-                      SharedPreferences sharedPreferences = getSharedPreferences(Constants.MOVIES, MODE_PRIVATE);
+                      SharedPreferences sharedPreferences = getSharedPreferences(Constants.MY_PREF, MODE_PRIVATE);
                       Gson gson = new Gson();
                       String popular = gson.toJson(popularMovies);
                       SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -107,12 +92,12 @@ public class MainActivity extends BaseActivity {
                       editor.apply();
                       List<MovieDetails> list= popularMovies.subList(0,6);
                       ArrayList<MovieDetails> arrayList = new ArrayList<>(list);
-                      recyclerViewAdapter = new RecyclerViewAdapter(arrayList);
+                      moviesRecyclerViewAdapter = new MoviesRecyclerViewAdapter(arrayList,MoviesHomeScreenActivity.this::onButtonClick);
                       RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplication(), LinearLayoutManager.HORIZONTAL, false);
-                      rvPopularMovies.setLayoutManager(mLayoutManager);
-                      rvPopularMovies.setAdapter(recyclerViewAdapter);
+                      binding.recPopularMovies.setLayoutManager(mLayoutManager);
+                      binding.recPopularMovies.setAdapter(moviesRecyclerViewAdapter);
 
-                      recyclerViewAdapter.notifyDataSetChanged();
+                      moviesRecyclerViewAdapter.notifyDataSetChanged();
 
 
                   }
@@ -122,8 +107,8 @@ public class MainActivity extends BaseActivity {
 
                   }
               });
-              call2 = apiService.getresponse();
-              call2.enqueue(new Callback<MoviesResponse>() {
+              topRatedMoviesCall = apiService.getresponse();
+              topRatedMoviesCall.enqueue(new Callback<MoviesResponse>() {
                   @Override
                   public void onResponse(@NonNull Call<MoviesResponse> call, @NonNull Response<MoviesResponse> response) {
                       MoviesResponse mr = response.body();
@@ -137,12 +122,11 @@ public class MainActivity extends BaseActivity {
                       editor.apply();
                       List<MovieDetails> list= topRated.subList(0,6);
                       ArrayList<MovieDetails> arrayList = new ArrayList<>(list);
-                      recyclerViewAdapter = new RecyclerViewAdapter(arrayList);
+                      moviesRecyclerViewAdapter = new MoviesRecyclerViewAdapter(arrayList,MoviesHomeScreenActivity.this::onButtonClick);
                       RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplication(), LinearLayoutManager.HORIZONTAL, false);
-                      rvTopRated.setLayoutManager(mLayoutManager);
-                      rvTopRated.setAdapter(recyclerViewAdapter);
-
-                      recyclerViewAdapter.notifyDataSetChanged();
+                      binding.recTopRated.setLayoutManager(mLayoutManager);
+                      binding.recTopRated.setAdapter(moviesRecyclerViewAdapter);
+                      moviesRecyclerViewAdapter.notifyDataSetChanged();
 
                   }
 
@@ -153,9 +137,9 @@ public class MainActivity extends BaseActivity {
               });
 
 
-              seeMore2.setOnClickListener(v -> {
-                  Intent intent = new Intent(MainActivity.this, MoviesGridViewActivity.class);
-                  intent.putExtra(Constants.TYPE, Constants.TOP_RATED);
+              binding.tvSeemore2.setOnClickListener(v -> {
+                  Intent intent = new Intent(MoviesHomeScreenActivity.this, MoviesGridViewActivity.class);
+                  intent.putExtra(Constants.MOVIE_TYPE, Constants.TOP_RATED);
                   startActivity(intent);
               });
           }
@@ -169,7 +153,7 @@ public class MainActivity extends BaseActivity {
     }
 
     private void checkLang() {
-        SharedPreferences sharedPreferences = getSharedPreferences(Constants.MOVIES, MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences(Constants.MY_PREF, MODE_PRIVATE);
         String lan=sharedPreferences.getString(Constants.LANG_PREF,null);
         if(lan !=null) {
             Locale locate = new Locale(lan);
@@ -201,15 +185,21 @@ public class MainActivity extends BaseActivity {
         MenuItem settings=menu.findItem(R.id.settings);
 
         settings.setOnMenuItemClickListener(item -> {
-            Intent intent =new Intent(MainActivity.this, SettingsActivity.class);
+            Intent intent =new Intent(MoviesHomeScreenActivity.this, SettingsActivity.class);
             startActivity(intent);
             return true;
         });
         searchViewItem.setOnMenuItemClickListener(item -> {
-            Intent intent =new Intent(MainActivity.this, SearchMovieActivity.class);
+            Intent intent =new Intent(MoviesHomeScreenActivity.this, SearchMovieActivity.class);
             startActivity(intent);
             return true;
         });
         return true;
+    }
+
+
+    @Override
+    public void onButtonClick(Intent intent) {
+        startActivity(intent);
     }
 }

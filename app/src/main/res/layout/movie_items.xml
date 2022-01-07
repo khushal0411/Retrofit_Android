@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <variable
+            name="movieDetails"
+            type="com.nuv.retrofitapplication.model.MovieDetails" />
+    </data>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
@@ -62,6 +68,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
+            android:text="@{String.valueOf(movieDetails.voteAverage)}"
             android:layout_marginTop="160dp"
             android:textColor="@color/black"
             android:textSize="13sp">
@@ -72,6 +79,7 @@
             android:id="@+id/tv_name"
             android:layout_width="wrap_content"
             android:layout_height="20dp"
+            android:text="@{movieDetails.originalTitle}"
             android:layout_marginStart="20dp"
             android:layout_marginTop="175dp"
             android:textColor="@color/black"
@@ -82,7 +90,6 @@
         <TextView
             android:id="@+id/tv_movie_date"
             android:layout_width="wrap_content"
-
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="190dp"
@@ -95,3 +102,4 @@
 
 
 </RelativeLayout>
+</layout>

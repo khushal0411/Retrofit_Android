@@ -1,8 +1,7 @@
 package com.nuv.retrofitapplication;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
+import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -13,6 +12,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 
+import android.provider.ContactsContract;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -23,6 +23,10 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.nuv.retrofitapplication.adapters.MoviesRecyclerViewAdapter;
+import com.nuv.retrofitapplication.constant.Constants;
+import com.nuv.retrofitapplication.databinding.ActivitySearchMovie2Binding;
+import com.nuv.retrofitapplication.model.MovieDetails;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -31,37 +35,24 @@ import java.util.Objects;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class SearchMovieActivity extends AppCompatActivity {
-    @BindView(R.id.tb_main) Toolbar toolbar;
-    @BindView(R.id.et_search) EditText searchQuery;
-    @BindView(R.id.btn_search) ImageButton search;
-    @BindView(R.id.search_recyclerview) RecyclerView recyclerView;
-    RecyclerViewAdapter recyclerViewAdapter;
+public class SearchMovieActivity extends BaseActivity implements MoviesRecyclerViewAdapter.onSelect {
+    MoviesRecyclerViewAdapter moviesRecyclerViewAdapter;
+    SharedPreferences sharedPreferences;
+    ActivitySearchMovie2Binding binding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        SharedPreferences sharedPreferences = getSharedPreferences(Constants.MOVIES, MODE_PRIVATE);
-        String Theme = sharedPreferences.getString(Constants.THEME, null);
-        if(Theme !=null){
-            if(Theme.equals(Constants.CHRISTMAS)){
-                setTheme(R.style.ChristmasTheme);
-            }else {
-                if(Theme.equals(Constants.DARK_MODE))
-                {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                }
-                else{
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                }
-            }}
-        setContentView(R.layout.activity_search_movie2);
+        themeCheck();
+        //setContentView(R.layout.activity_search_movie2);
+        binding = DataBindingUtil.setContentView(this,R.layout.activity_search_movie2);
+        sharedPreferences = getSharedPreferences(Constants.MY_PREF, MODE_PRIVATE);
         ButterKnife.bind(this);
-        setSupportActionBar(toolbar);
-        toolbar.setNavigationIcon(R.drawable.back);
+        setSupportActionBar(binding.toolbar.tbMain);
+        binding.toolbar.tbMain.setNavigationIcon(R.drawable.back);
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
-        toolbar.setTitle(R.string.SearchMovies);
+        binding.toolbar.tbMain.setTitle(R.string.SearchMovies);
 
-        toolbar.setNavigationOnClickListener(v -> finish());
+        binding.toolbar.tbMain.setNavigationOnClickListener(v -> finish());
         if (isConnected()) {
 
             Gson gson = new Gson();
@@ -73,31 +64,31 @@ public class SearchMovieActivity extends AppCompatActivity {
             ArrayList<MovieDetails> list2 = gson.fromJson(toprated1, type);
 
             list1.addAll(list2);
-            search.setOnClickListener(v -> {
+            binding.btnSearch.setOnClickListener(v -> {
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 String data = sharedPreferences.getString(Constants.FINAL_ARRAY, null);
                 if (data != null) {
                     editor.remove(Constants.FINAL_ARRAY);
-                    editor.remove(Constants.INDEX);
+                    editor.remove(Constants.MOVIE_INDEX);
                     editor.apply();
                 }
 
-                String query = searchQuery.getText().toString();
+                String query = binding.etSearch.getText().toString();
                 int size = list1.size();
                 for (int i = 0; i < size; i++) {
                     String titlename = list1.get(i).getTitle().toUpperCase();
                     if (titlename.contains(query.toUpperCase())) {
 
-                        String json1 = sharedPreferences.getString(Constants.INDEX, null);
+                        String json1 = sharedPreferences.getString(Constants.MOVIE_INDEX, null);
                         if (json1 == null) {
                             editor = sharedPreferences.edit();
-                            editor.putString(Constants.INDEX, String.valueOf(i));
+                            editor.putString(Constants.MOVIE_INDEX, String.valueOf(i));
                             editor.apply();
                         } else {
-                            json1 = sharedPreferences.getString(Constants.INDEX, null);
+                            json1 = sharedPreferences.getString(Constants.MOVIE_INDEX, null);
                             String combined = json1 + "," + i;
                             editor = sharedPreferences.edit();
-                            editor.putString(Constants.INDEX, combined);
+                            editor.putString(Constants.MOVIE_INDEX, combined);
                             editor.apply();
                         }
 
@@ -108,7 +99,7 @@ public class SearchMovieActivity extends AppCompatActivity {
 
                 }
 
-                String index = sharedPreferences.getString(Constants.INDEX, null);
+                String index = sharedPreferences.getString(Constants.MOVIE_INDEX, null);
                 if(index !=null) {
                     String[] split = index.split(",");
                     for (String s : split) {
@@ -133,11 +124,11 @@ public class SearchMovieActivity extends AppCompatActivity {
                     }
                     String finalarray = sharedPreferences.getString(Constants.FINAL_ARRAY, null);
                     ArrayList<MovieDetails> finala = gson.fromJson(finalarray, type);
-                    recyclerViewAdapter = new RecyclerViewAdapter(finala);
+                    moviesRecyclerViewAdapter = new MoviesRecyclerViewAdapter(finala,SearchMovieActivity.this);
                     RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getApplication(), 3);
-                    recyclerView.setLayoutManager(mLayoutManager);
-                    recyclerView.setAdapter(recyclerViewAdapter);
-                    recyclerViewAdapter.notifyDataSetChanged();
+                    binding.searchRecyclerView.setLayoutManager(mLayoutManager);
+                    binding.searchRecyclerView.setAdapter(moviesRecyclerViewAdapter);
+                    moviesRecyclerViewAdapter.notifyDataSetChanged();
                 }
 
                 else
@@ -174,5 +165,10 @@ public class SearchMovieActivity extends AppCompatActivity {
 
         return true;
 
+    }
+
+    @Override
+    public void onButtonClick(Intent intent) {
+        startActivity(intent);
     }
 }

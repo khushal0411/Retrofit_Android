@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
+<layout>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SplashScreenActivity"
+    tools:context=".MoviesSplashScreenActivity"
     android:orientation="vertical"
     android:background="#f5bf67">
 
     <ImageView
-        android:id="@+id/img_applogo"
+        android:id="@+id/img_app_logo"
         android:layout_width="300dp"
         android:layout_height="300dp"
         android:layout_marginStart="50dp"
@@ -20,9 +21,10 @@
         android:layout_marginTop="20dp"
         android:layout_marginStart="40dp"
         android:layout_height="wrap_content"
-        android:id="@+id/tv_splashscreentitle"
+        android:id="@+id/tv_splash_screen_title"
         android:text="Movie Recommendation App"
         android:textSize="26dp"/>
 
 
 </LinearLayout>
+</layout>

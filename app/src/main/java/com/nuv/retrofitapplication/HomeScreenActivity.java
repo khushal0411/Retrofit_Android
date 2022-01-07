@@ -2,57 +2,54 @@ package com.nuv.retrofitapplication;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.google.android.material.navigation.NavigationView;
+import com.nuv.retrofitapplication.databinding.ActivityHomeScreenBinding;
 
 import java.util.Objects;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class DrawerLayoutActivity extends AppCompatActivity {
-@BindView(R.id.tb_main) Toolbar toolbar;
-@BindView(R.id.drawer_layout) DrawerLayout drawerLayout;
-@BindView(R.id.navigation) NavigationView navView;
+public class HomeScreenActivity extends AppCompatActivity  {
+    ActivityHomeScreenBinding binding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_drawer_layout);
+       binding = DataBindingUtil.setContentView(this,R.layout.activity_home_screen);
+        //setContentView(R.layout.activity_home_screen);
         HomeFragment homeFragment= new HomeFragment();
         FragmentTransaction transactions = getSupportFragmentManager().beginTransaction();
-        transactions.replace(R.id.frame, homeFragment);
+        transactions.replace(R.id.fl_home_screen, homeFragment);
         transactions.commit();
         ButterKnife.bind(this);
-        toolbar.setTitle(R.string.Home_Screen);
-        setSupportActionBar(toolbar);
+        binding.toolbar.tbMain.setTitle(R.string.Home_Screen);
+        setSupportActionBar(binding.toolbar.tbMain);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
-        ActionBarDrawerToggle drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.drawer_open,  R.string.drawer_close);
+        ActionBarDrawerToggle drawerToggle = new ActionBarDrawerToggle(this, binding.drawerLayout,binding.toolbar.tbMain, R.string.drawer_open,  R.string.drawer_close);
         drawerToggle.setDrawerIndicatorEnabled(true);
         drawerToggle.syncState();
 
-        drawerLayout.addDrawerListener(drawerToggle);
-        navView.setNavigationItemSelectedListener(item -> {
+        binding.drawerLayout.addDrawerListener(drawerToggle);
+        binding.navigation.setNavigationItemSelectedListener(item -> {
             int itemId = item.getItemId();
             Fragment frag = null;
             if (itemId == R.id.mr_app) {
-                Intent intent =new Intent(DrawerLayoutActivity.this,SplashScreenActivity.class);
+                Intent intent =new Intent(HomeScreenActivity.this, MoviesSplashScreenActivity.class);
                 startActivity(intent);
             }
             else if(itemId==R.id.cr_app)
             {
                 getSupportActionBar().setTitle(R.string.COLOR_SELECTION_APP);
-                frag =new DefaultColorFragment();
+                frag =new ChooseColorFragment();
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.frame, frag);
+                transaction.replace(R.id.fl_home_screen, frag).addToBackStack(null);
                 transaction.commit();
-                drawerLayout.closeDrawers();
+                binding.drawerLayout.closeDrawers();
                 return true;
             }
             else if(itemId==R.id.vapi_app)
@@ -60,17 +57,17 @@ public class DrawerLayoutActivity extends AppCompatActivity {
                 getSupportActionBar().setTitle(R.string.VideoAPIFRagment);
                 frag =new VideoListFragment();
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.frame, frag);
+                transaction.replace(R.id.fl_home_screen, frag).addToBackStack(null);
                 transaction.commit();
-                drawerLayout.closeDrawers();
+                binding.drawerLayout.closeDrawers();
                 return true;
             }
             else
             { getSupportActionBar().setTitle(R.string.HOME_SCREEN);
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.frame, homeFragment);
+                transaction.replace(R.id.fl_home_screen, homeFragment).addToBackStack(null);
                 transaction.commit();
-                drawerLayout.closeDrawers();
+                binding.drawerLayout.closeDrawers();
                 return true;
             }
             return true;
@@ -80,6 +77,7 @@ public class DrawerLayoutActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-
     }
+
+
 }
