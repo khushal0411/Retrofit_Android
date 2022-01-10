@@ -27,4 +27,7 @@ public class Constants {
     public static final String VIDEO_URL="VideoURl";
     public static final String VIDEO_NAME="VideoName";
     public static final String ERROR="Error Receiving Data";
+    public static final String VIDEO_PLAYER ="Video Player" ;
+    public static final String HOME_SCREEN ="Home Screen" ;
+    public static final String VIDEO_APP_NAME ="Video API Call" ;
 }

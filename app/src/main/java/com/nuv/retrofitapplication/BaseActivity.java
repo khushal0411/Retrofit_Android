@@ -13,18 +13,17 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class BaseActivity extends AppCompatActivity {
+    public Retrofit retrofit;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-    }
-
-
-    public ApiService apiCall(){
-
-        Retrofit retrofit = new Retrofit.Builder()
+        retrofit = new Retrofit.Builder()
                 .baseUrl(Constants.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
+    }
+
+    public ApiService apiCall(){
         ApiService apiService = retrofit.create(ApiService.class);
         return apiService;
     }
@@ -44,7 +43,5 @@ public class BaseActivity extends AppCompatActivity {
               }
           }}
   }
-
-
 
 }

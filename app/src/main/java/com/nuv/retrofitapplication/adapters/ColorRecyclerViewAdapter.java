@@ -37,8 +37,10 @@ public class ColorRecyclerViewAdapter extends RecyclerView.Adapter<ColorRecycler
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         @SuppressLint("NonConstantResourceId")
         @BindView(R.id.cv_bgcolor) CardView bgColorCard;
-        public MyViewHolder(@NonNull View itemView) {
+        ColorItemsBinding binding;
+        public MyViewHolder(@NonNull View itemView,ColorItemsBinding binding) {
             super(itemView);
+            this.binding=binding;
             ButterKnife.bind(this,itemView);
         }
     }
@@ -47,7 +49,7 @@ public class ColorRecyclerViewAdapter extends RecyclerView.Adapter<ColorRecycler
     @Override
     public ColorRecyclerViewAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         binding= DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()),R.layout.color_items,parent,false);
-        return new MyViewHolder(binding.getRoot());
+        return new MyViewHolder(binding.getRoot(),binding);
     }
 
     @Override

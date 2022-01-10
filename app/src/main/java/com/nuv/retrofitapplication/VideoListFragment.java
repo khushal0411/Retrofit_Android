@@ -47,7 +47,8 @@ FragmentVideoListBinding binding;
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_video_list,container,false);
-
+        HomeScreenActivity homeScreenActivity= (HomeScreenActivity)getActivity();
+        homeScreenActivity.binding.toolbar.tbMain.setTitle(Constants.VIDEO_APP_NAME);
         return binding.getRoot();
     }
 
