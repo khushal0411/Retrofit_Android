@@ -25,5 +25,9 @@
 
             android:icon="@drawable/video"
             />
+        <item
+            android:id="@+id/alarm_manager"
+            android:title="Alarm Manager"
+            android:icon="@drawable/alarm"/>
     </group>
 </menu>

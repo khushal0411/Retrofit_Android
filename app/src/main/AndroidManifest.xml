@@ -43,6 +43,8 @@
         <activity
             android:name=".MoviesHomeScreenActivity"
             android:screenOrientation="portrait"/>
+
+        <receiver android:name=".NotificationReceivers"/>
     </application>
 
 </manifest>

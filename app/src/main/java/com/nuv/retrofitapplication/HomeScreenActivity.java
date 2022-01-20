@@ -62,6 +62,16 @@ public class HomeScreenActivity extends AppCompatActivity  {
                 binding.drawerLayout.closeDrawers();
                 return true;
             }
+            else if(itemId==R.id.alarm_manager)
+            {
+                getSupportActionBar().setTitle("Alarm Manager");
+                frag =new AlarmFragment();
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.fl_home_screen, frag).addToBackStack(null);
+                transaction.commit();
+                binding.drawerLayout.closeDrawers();
+                return true;
+            }
             else
             { getSupportActionBar().setTitle(R.string.HOME_SCREEN);
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();

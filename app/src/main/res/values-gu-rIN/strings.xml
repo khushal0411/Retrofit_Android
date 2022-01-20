@@ -10,4 +10,9 @@
     <string name="INDRODUCTION_MESSAGE_COLORAPP">Welcome To Page where the background color is the combination of your selected three colors......</string>
     <string name="Home_Screen">Home Screen</string>
     <string name="VideoAPIFRagment">Video API Fragment</string>
+    <string name="alarm_manager">Alarm Manager</string>
+    <string name="default_time">00:00 AM/PM</string>
+    <string name="choose_time">Choose Time</string>
+    <string name="et_time_manager">Enter Text you want to display in notification</string>
+    <string name="set_alarm">Set Alarm</string>
 </resources>

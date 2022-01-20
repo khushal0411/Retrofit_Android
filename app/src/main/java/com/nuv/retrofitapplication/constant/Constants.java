@@ -1,5 +1,8 @@
 package com.nuv.retrofitapplication.constant;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 public class Constants {
     public static final String BASE_URL = "https://api.themoviedb.org/";
     public static final String COLOR_SELECTED_INDEX ="INDEX" ;
@@ -30,4 +33,8 @@ public class Constants {
     public static final String VIDEO_PLAYER ="Video Player" ;
     public static final String HOME_SCREEN ="Home Screen" ;
     public static final String VIDEO_APP_NAME ="Video API Call" ;
+    @Nullable
+    public static final String CHANNEL_ID="Channel Id";
+    @NotNull
+    public static final String NOTIFICATION="Notification";
 }

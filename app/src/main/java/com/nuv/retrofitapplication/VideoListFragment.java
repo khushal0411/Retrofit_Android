@@ -88,7 +88,9 @@ FragmentVideoListBinding binding;
     @Override
     public void onButtonClick(Fragment frag) {
         FragmentTransaction transactions = getParentFragmentManager().beginTransaction();
-        transactions.replace(R.id.fl_home_screen, frag).addToBackStack(null);
+        transactions.add(R.id.fl_home_screen,frag);
+        transactions.hide(VideoListFragment.this);
+        transactions.addToBackStack(VideoListFragment.class.getName());
         transactions.commit();
     }
 
