@@ -9,14 +9,13 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:usesCleartextTraffic="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".HomeScreenActivity"
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
+        <activity android:name=".kotlin_mvvm.activities.MoviesActivity"
             android:exported="true"
-            android:screenOrientation="portrait"
-            >
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -24,10 +23,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MoviesSplashScreenActivity"
+            android:name=".HomeScreenActivity"
+            android:exported="true"
             android:screenOrientation="portrait">
-
         </activity>
+        <activity
+            android:name=".MoviesSplashScreenActivity"
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".SettingsActivity"
             android:screenOrientation="portrait" />
@@ -42,9 +44,9 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".MoviesHomeScreenActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
-        <receiver android:name=".NotificationReceivers"/>
+        <receiver android:name=".NotificationReceivers" />
     </application>
 
 </manifest>
