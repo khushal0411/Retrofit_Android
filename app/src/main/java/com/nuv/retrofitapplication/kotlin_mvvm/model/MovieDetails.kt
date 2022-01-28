@@ -1,12 +1,18 @@
 package com.nuv.retrofitapplication.kotlin_mvvm.model
 
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
+@Entity(tableName = "MovieDetails")
 data class MovieDetails(
+
     @SerializedName("adult") var adult: Boolean? = null,
     @SerializedName("backdrop_path") var backdropPath: String? = null,
-    @SerializedName("genre_ids") var genreIds: ArrayList<Int> = arrayListOf(),
-    @SerializedName("id") var id: Int? = null,
+    //@SerializedName("genre_ids") var genreIds: ArrayList<Int> = arrayListOf(),
+    @PrimaryKey(autoGenerate = true)
+    @SerializedName("id") var id: Int,
     @SerializedName("original_language") var originalLanguage: String? = null,
     @SerializedName("original_title") var originalTitle: String? = null,
     @SerializedName("overview") var overview: String? = null,

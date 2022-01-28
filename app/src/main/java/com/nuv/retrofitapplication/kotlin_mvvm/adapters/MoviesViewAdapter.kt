@@ -2,8 +2,11 @@ package com.nuv.retrofitapplication.kotlin_mvvm.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
+import com.nuv.retrofitapplication.R
 import com.nuv.retrofitapplication.constant.Constants
 import com.nuv.retrofitapplication.databinding.MoviesListKotlinBinding
 import com.nuv.retrofitapplication.kotlin_mvvm.model.MovieDetails
@@ -12,7 +15,7 @@ import com.nuv.retrofitapplication.kotlin_mvvm.model.MovieDetails
 class MoviesViewAdapter:RecyclerView.Adapter<ViewHolder>() {
  private var movies = mutableListOf<MovieDetails>()
 
-    fun setMoviesList(movies: List<MovieDetails>){
+    fun setMoviesList(movies:List<MovieDetails>){
         this.movies=movies.toMutableList()
         notifyDataSetChanged()
     }
@@ -27,7 +30,8 @@ class MoviesViewAdapter:RecyclerView.Adapter<ViewHolder>() {
         val movie= movies[position]
         holder.binding.movieDetails=movie
         holder.binding.tvMovieDate.text=movie.releaseDate.toString().substring(0,4)
-        Glide.with(holder.itemView).load(Constants.URL_IMAGE + movie.posterPath.toString())
+        Glide.with(holder.itemView).load(Constants.URL_IMAGE + movie.posterPath.toString()).apply(RequestOptions().placeholder(
+            R.drawable.ccccc))
             .into(holder.binding.imgMovie)
 
     }
